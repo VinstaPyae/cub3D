@@ -45,18 +45,36 @@ void read_and_print_file(int fd)
     free(line);
 }
 
-
-int	main(int ac, char *av[])
+int main(int ac, char *av[])
 {
-	int	fd;
-	if (ac != 2)
-		return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
-	if (!check_file_extension(av[1]))
-		return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
-	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-		return (perror("Error\nFailed to open file\n"), 1);
-	read_and_print_file(fd);
-	close(fd);
-	return (0);
+    int     fd;
+    char    **lines;
+    int     i;
+
+    if (ac != 2)
+        return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
+    if (!check_file_extension(av[1]))
+        return (ft_putstr_fd("Error\nFile must end with .cub\n", 2), 1);
+
+    fd = open(av[1], O_RDONLY);
+    if (fd < 0)
+        perror("Error\nFailed to open file"), exit(1);
+
+    /* Phase 2 – Task 1: read all lines */
+    lines = read_file_lines(fd);
+    close(fd);
+
+    /* -- just to verify for now -- print them back out: */
+    i = 0;
+    while (lines[i])
+    {
+        ft_putstr_fd(lines[i], 1);
+        ft_putchar_fd('\n', 1);
+        free(lines[i]);     // clean up
+        i++;
+    }
+    free(lines);
+
+    return (0);
 }
+

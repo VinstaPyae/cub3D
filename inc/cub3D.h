@@ -30,4 +30,14 @@ typedef struct s_config
     int      map_height;
 }   t_config;
 
+typedef struct s_file
+{
+    char **lines;  // Array of strings (each line in the .cub file)
+    int count;     // Number of lines
+} t_file;
+
+/* Read all lines from fd into a NULL-terminated array; exit on error */
+char    **read_file_lines(int fd);
+
+
 #endif /* CUB3D_H */
