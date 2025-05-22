@@ -12,6 +12,8 @@
 # include <stdlib.h>   /* malloc, free, exit */
 # include <stdio.h>    /* perror */
 # include "libft.h"    /* your libft functions */
+# include "utils.h"
+# include "parser.h"
 
 /*
  * Configuration structure: holds all parsed .cub data
@@ -35,9 +37,6 @@ typedef struct s_file
     char **lines;  // Array of strings (each line in the .cub file)
     int count;     // Number of lines
 } t_file;
-
-/* Read all lines from fd into a NULL-terminated array; exit on error */
-char    **read_file_lines(int fd);
 
 
 #endif /* CUB3D_H */

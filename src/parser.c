@@ -20,8 +20,7 @@ static char *read_whole_file(int fd)
         tmp = ft_strjoin(content, buffer);
         if (!tmp)
         {
-            free(content);
-            perror("Error\nMalloc failed");
+            free(content), perror("Error\nMalloc failed");
             exit(1);
         }
         free(content);

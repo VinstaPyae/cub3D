@@ -44,37 +44,66 @@ void read_and_print_file(int fd)
     }
     free(line);
 }
-
-int main(int ac, char *av[])
+int	main(int ac, char *av[])
 {
-    int     fd;
-    char    **lines;
-    int     i;
+	int			fd;
+	char		**lines;
+	int			i = 0;
+	// int			map_start_index = -1;
+	t_config	config = {0};  // auto-zero everything
 
-    if (ac != 2)
-        return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
-    if (!check_file_extension(av[1]))
-        return (ft_putstr_fd("Error\nFile must end with .cub\n", 2), 1);
+	if (ac != 2)
+		return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
+	if (!check_file_extension(av[1]))
+		return (ft_putstr_fd("Error\nFile must end with .cub\n", 2), 1);
 
-    fd = open(av[1], O_RDONLY);
-    if (fd < 0)
-        perror("Error\nFailed to open file"), exit(1);
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		return (perror("Error\nFailed to open file"), 1);
+	lines = read_file_lines(fd);
+	close(fd);
 
-    /* Phase 2 – Task 1: read all lines */
-    lines = read_file_lines(fd);
-    close(fd);
+	while (lines[i])
+	{
+		char *trimmed = ft_strtrim(lines[i], " \t");
+		if (!trimmed || trimmed[0] == '\0')  // skip empty line
+		{
+			free(trimmed);
+			i++;
+			continue;
+		}
 
-    /* -- just to verify for now -- print them back out: */
-    i = 0;
-    while (lines[i])
-    {
-        ft_putstr_fd(lines[i], 1);
-        ft_putchar_fd('\n', 1);
-        free(lines[i]);     // clean up
-        i++;
-    }
-    free(lines);
+		if (starts_with(trimmed, "NO"))
+			parse_texture(trimmed, &config.texture_no);
+		else if (starts_with(trimmed, "SO"))
+			parse_texture(trimmed, &config.texture_so);
+		else if (starts_with(trimmed, "WE"))
+			parse_texture(trimmed, &config.texture_we);
+		else if (starts_with(trimmed, "EA"))
+			parse_texture(trimmed, &config.texture_ea);
+		else if (starts_with(trimmed, "F"))
+			parse_color(trimmed, &config.floor_color);
+		else if (starts_with(trimmed, "C"))
+			parse_color(trimmed, &config.ceiling_color);
+		else
+		{
+			// map_start_index = i;  // mark the start of map
+			free(trimmed);
+			break;
+		}
+		free(trimmed);
+		i++;
+	}
 
-    return (0);
+	// Example: Check if everything was set correctly (optional)
+	// printf("NO: %s\n", config.texture_no);
+	// printf("Floor color: %d\n", config.floor_color);
+
+	// Free the original lines array
+	i = 0;
+	while (lines[i])
+		free(lines[i++]);
+	free(lines);
+
+	return (0);
 }
-
