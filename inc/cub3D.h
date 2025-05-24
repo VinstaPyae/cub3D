@@ -19,18 +19,6 @@
  * Configuration structure: holds all parsed .cub data
  * (we'll fill it out more as you implement parsing)
  */
-typedef struct s_config
-{
-    char    *texture_no;
-    char    *texture_so;
-    char    *texture_we;
-    char    *texture_ea;
-    int      floor_color;
-    int      ceiling_color;
-    char   **map;
-    int      map_width;
-    int      map_height;
-}   t_config;
 
 typedef struct s_file
 {

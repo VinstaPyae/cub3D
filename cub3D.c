@@ -11,58 +11,43 @@ int	check_file_extension(char *filename)
 		return (0);
 	return (ft_strncmp(dot, ".cub", 5) == 0);
 }
-
-void read_and_print_file(int fd)
+void	init_config(t_config *config)
 {
-    char *line = malloc(10000);  // Temporary large buffer
-    if (!line)
-    {
-        ft_putstr_fd("Error\nMemory allocation failed\n", 2);
-        exit(1);
-    }
-    int i = 0;
-    char buf[1];
-    int byts;
-
-    while ((byts = read(fd, buf, BUFFER_SIZE)) > 0)
-    {
-        if (buf[0] == '\n')
-        {
-            line[i] = '\0';
-            write(1, line, i);     // Print the line
-            write(1, "\n", 1);     // Add newline
-            i = 0;                 // Reset for next line
-        }
-        else
-            line[i++] = buf[0];
-    }
-    if (i > 0) // Last line if not ending in '\n'
-    {
-        line[i] = '\0';
-        write(1, line, i);
-        write(1, "\n", 1);
-    }
-    free(line);
+	config->texture_no = NULL;
+	config->texture_ea = NULL;
+	config->texture_so = NULL;
+	config->texture_we = NULL;
+	config->floor_color = -1;
+	config->ceiling_color = -1;
+	config->map = NULL;
+	config->map_height = 0;
+	config->map_width = 0;
+	config->map_start_indx = -1;
 }
+
 int	main(int ac, char *av[])
 {
 	int			fd;
 	char		**lines;
 	int			i = 0;
-	// int			map_start_index = -1;
-	t_config	config = {0};  // auto-zero everything
+	t_config	*config;  // auto-zero everything
 
 	if (ac != 2)
 		return (ft_putstr_fd("Error\nUsage: ./cub3D <file.cub>\n", 2), 1);
 	if (!check_file_extension(av[1]))
 		return (ft_putstr_fd("Error\nFile must end with .cub\n", 2), 1);
-
+	config = malloc(sizeof(t_config));
+	if (!config)
+		return (ft_putstr_fd("Error\nMem error\n", 2), 1);
+	init_config(config);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		return (perror("Error\nFailed to open file"), 1);
 	lines = read_file_lines(fd);
 	close(fd);
-
+	// for(i=0; lines[i]; i++)
+	// 	printf("%s\n", lines[i]);
+	// i = 0;
 	while (lines[i])
 	{
 		char *trimmed = ft_strtrim(lines[i], " \t");
@@ -72,38 +57,52 @@ int	main(int ac, char *av[])
 			i++;
 			continue;
 		}
-
+		printf("trimmed str: %s\n", trimmed);
 		if (starts_with(trimmed, "NO"))
-			parse_texture(trimmed, &config.texture_no);
+			parse_texture(trimmed, &config->texture_no);
 		else if (starts_with(trimmed, "SO"))
-			parse_texture(trimmed, &config.texture_so);
+			parse_texture(trimmed, &config->texture_so);
 		else if (starts_with(trimmed, "WE"))
-			parse_texture(trimmed, &config.texture_we);
+			parse_texture(trimmed, &config->texture_we);
 		else if (starts_with(trimmed, "EA"))
-			parse_texture(trimmed, &config.texture_ea);
+			parse_texture(trimmed, &config->texture_ea);
 		else if (starts_with(trimmed, "F"))
-			parse_color(trimmed, &config.floor_color);
+			parse_color(trimmed, &config->floor_color);
 		else if (starts_with(trimmed, "C"))
-			parse_color(trimmed, &config.ceiling_color);
+			parse_color(trimmed, &config->ceiling_color);
 		else
 		{
-			// map_start_index = i;  // mark the start of map
+			config->map_start_indx = i;  // mark the start of map
+			printf("break\n");
 			free(trimmed);
 			break;
 		}
 		free(trimmed);
 		i++;
 	}
-
-	// Example: Check if everything was set correctly (optional)
-	// printf("NO: %s\n", config.texture_no);
-	// printf("Floor color: %d\n", config.floor_color);
-
-	// Free the original lines array
+	if (!config->texture_no || !config->texture_so || !config->texture_we || !config->texture_ea)
+	{
+		ft_putstr_fd("Error\nMissing one or more wall textures\n", 2);
+		exit(1);
+	}
+	printf("Tex: %s\n", config->texture_ea);
+	printf("Tex: %s\n", config->texture_so);
+	printf("Tex: %s\n", config->texture_no);
+	printf("Tex: %s\n", config->texture_we);
+	if (config->floor_color == -1 || config->ceiling_color == -1)
+	{
+		ft_putstr_fd("Error\nMissing floor or ceiling color\n", 2);
+		exit(1);
+	}
+	printf("Color: %d\n", config->ceiling_color);
+	printf("Color: %d\n", config->floor_color);
+	parse_map(lines, config->map_start_indx, config);
+	validate_map(config);
+	for (i=0; config->map[i]; i++)
+		printf("%s\n", config->map[i]);
 	i = 0;
 	while (lines[i])
 		free(lines[i++]);
 	free(lines);
-
 	return (0);
 }
