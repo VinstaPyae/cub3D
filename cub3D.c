@@ -13,6 +13,7 @@ int	check_file_extension(char *filename)
 }
 void	init_config(t_config *config)
 {
+	config->lines = NULL;
 	config->texture_no = NULL;
 	config->texture_ea = NULL;
 	config->texture_so = NULL;
@@ -28,7 +29,6 @@ void	init_config(t_config *config)
 int	main(int ac, char *av[])
 {
 	int			fd;
-	char		**lines;
 	int			i = 0;
 	t_config	*config;  // auto-zero everything
 
@@ -42,15 +42,15 @@ int	main(int ac, char *av[])
 	init_config(config);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (perror("Error\nFailed to open file"), 1);
-	lines = read_file_lines(fd);
+		return (perror("Error\nFailed to open file"), ft_clean_up(config), 1);
+	config->lines = read_file_lines(fd);
 	close(fd);
 	// for(i=0; lines[i]; i++)
 	// 	printf("%s\n", lines[i]);
 	// i = 0;
-	while (lines[i])
+	while (config->lines[i])
 	{
-		char *trimmed = ft_strtrim(lines[i], " \t");
+		char *trimmed = ft_strtrim(config->lines[i], " \t");
 		if (!trimmed || trimmed[0] == '\0')  // skip empty line
 		{
 			free(trimmed);
@@ -59,17 +59,17 @@ int	main(int ac, char *av[])
 		}
 		printf("trimmed str: %s\n", trimmed);
 		if (starts_with(trimmed, "NO"))
-			parse_texture(trimmed, &config->texture_no);
+			parse_texture(trimmed, &config->texture_no, config);
 		else if (starts_with(trimmed, "SO"))
-			parse_texture(trimmed, &config->texture_so);
+			parse_texture(trimmed, &config->texture_so, config);
 		else if (starts_with(trimmed, "WE"))
-			parse_texture(trimmed, &config->texture_we);
+			parse_texture(trimmed, &config->texture_we, config);
 		else if (starts_with(trimmed, "EA"))
-			parse_texture(trimmed, &config->texture_ea);
+			parse_texture(trimmed, &config->texture_ea, config);
 		else if (starts_with(trimmed, "F"))
-			parse_color(trimmed, &config->floor_color);
+			parse_color(trimmed, &config->floor_color, config);
 		else if (starts_with(trimmed, "C"))
-			parse_color(trimmed, &config->ceiling_color);
+			parse_color(trimmed, &config->ceiling_color, config);
 		else
 		{
 			config->map_start_indx = i;  // mark the start of map
@@ -83,6 +83,7 @@ int	main(int ac, char *av[])
 	if (!config->texture_no || !config->texture_so || !config->texture_we || !config->texture_ea)
 	{
 		ft_putstr_fd("Error\nMissing one or more wall textures\n", 2);
+		ft_clean_up(config);
 		exit(1);
 	}
 	printf("Tex: %s\n", config->texture_ea);
@@ -92,17 +93,16 @@ int	main(int ac, char *av[])
 	if (config->floor_color == -1 || config->ceiling_color == -1)
 	{
 		ft_putstr_fd("Error\nMissing floor or ceiling color\n", 2);
+		// ft_clean_up(config);
 		exit(1);
 	}
 	printf("Color: %d\n", config->ceiling_color);
 	printf("Color: %d\n", config->floor_color);
-	parse_map(lines, config->map_start_indx, config);
+	parse_map(config->lines, config->map_start_indx, config);
 	validate_map(config);
 	for (i=0; config->map[i]; i++)
 		printf("%s\n", config->map[i]);
 	i = 0;
-	while (lines[i])
-		free(lines[i++]);
-	free(lines);
+	ft_clean_up(config);
 	return (0);
 }

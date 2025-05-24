@@ -3,6 +3,7 @@
 
 typedef struct s_config
 {
+    char    **lines;
     char    *texture_no;
     char    *texture_so;
     char    *texture_we;
@@ -15,8 +16,8 @@ typedef struct s_config
     int     map_start_indx;
 }   t_config;
 
-void	parse_texture(char *line, char **destination);
-void	parse_color(char *line, int *color_out);
+void	parse_texture(char *line, char **destination, t_config *cfg);
+void	parse_color(char *line, int *color_out, t_config *cfg);
 void	parse_map(char **lines, int start, t_config *cfg);
 void	validate_map(t_config *cfg);
 char	**read_file_lines(int fd);

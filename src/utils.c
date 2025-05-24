@@ -18,6 +18,49 @@ void	ft_free_strs(char **strs)
 	if (!strs)
 		return;
 	while (strs[i])
-		free(strs[i++]);
+    {
+		free(strs[i]);
+        strs[i++] = NULL;
+    }
 	free(strs);
+    strs = NULL;
+}
+
+void    ft_clean_up(t_config *cfg)
+{
+    if (cfg->lines)
+    {
+        ft_free_strs(cfg->lines);
+        cfg->lines = NULL;
+    }
+    if (cfg->texture_no)
+    {
+        free(cfg->texture_no);
+        cfg->texture_no = NULL;
+    }
+    if (cfg->texture_so)
+    {
+        free(cfg->texture_so);
+        cfg->texture_so = NULL;
+    }
+    if (cfg->texture_ea)
+    {
+        free(cfg->texture_ea);
+        cfg->texture_ea = NULL;
+    }
+    if (cfg->texture_we)
+    {
+        free(cfg->texture_we);
+        cfg->texture_we = NULL;
+    }
+    if (cfg->map)
+    {
+        ft_free_strs(cfg->map);
+        cfg->map = NULL;
+    }
+    if (cfg)
+    {
+        free(cfg);
+        cfg = NULL;
+    }
 }

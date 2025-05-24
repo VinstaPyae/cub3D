@@ -31,6 +31,7 @@ static void	check_enclosure(t_config *cfg, int y, int x)
 		if (!is_in_bounds(ny, nx, cfg) || cfg->map[ny][nx] == ' ')
 		{
 			ft_putstr_fd("Error\nMap is not enclosed by walls\n", 2);
+			ft_clean_up(cfg);
 			exit(1);
 		}
 		i++;
@@ -53,6 +54,7 @@ void	validate_map(t_config *cfg)
 			if (!is_valid_char(c))
 			{
 				ft_putstr_fd("Error\nInvalid character in map\n", 2);
+				ft_clean_up(cfg);
 				exit(1);
 			}
 			if (c == '0' || is_player_char(c))
@@ -68,6 +70,7 @@ void	validate_map(t_config *cfg)
 	if (player_count != 1)
 	{
 		ft_putstr_fd("Error\nMap must have exactly one player start\n", 2);
+		ft_clean_up(cfg);
 		exit(1);
 	}
 }
