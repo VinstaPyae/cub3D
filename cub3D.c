@@ -1,5 +1,30 @@
 #include "cub3D.h"
 
+#include "cub3D.h"
+
+void	start_game(t_config *config)
+{
+	t_game	game;
+
+	game.config = *config; // Copy the config into the game struct
+	game.mlx = mlx_init();
+	if (!game.mlx)
+	{
+		ft_putstr_fd("Error\nFailed to initialize MiniLibX\n", 2);
+		exit(1);
+	}
+	game.win = mlx_new_window(game.mlx, WIDTH, HEIGHT, "cub3D");
+	if (!game.win)
+	{
+		ft_putstr_fd("Error\nFailed to create window\n", 2);
+		exit(1);
+	}
+
+	// TEMP: fill window with a color (we'll replace this with real drawing later)
+	mlx_loop(game.mlx); // This blocks the main thread until the window is closed
+}
+
+
 int	check_file_extension(char *filename)
 {
 	char	*dot;
@@ -93,7 +118,7 @@ int	main(int ac, char *av[])
 	if (config->floor_color == -1 || config->ceiling_color == -1)
 	{
 		ft_putstr_fd("Error\nMissing floor or ceiling color\n", 2);
-		// ft_clean_up(config);
+		ft_clean_up(config);
 		exit(1);
 	}
 	printf("Color: %d\n", config->ceiling_color);

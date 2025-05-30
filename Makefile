@@ -1,55 +1,76 @@
 # -------------------------
 #       PROJECT SETUP
 # -------------------------
+
 # Compiler and flags
 CC       := gcc
-CFLAGS   := -Wall -Wextra -Werror -std=c99 -Iinc -Ilibft
+CFLAGS   := -Wall -Wextra -Werror
 
 # Directories
-INCDIR   := inc
 SRCDIR   := src
+INCDIR   := inc
+OBJDIR   := obj
 LIBFTDIR := libft
+MLXDIR   := minilibx-linux
 
-# Files
-MAIN_SRC    := cub3D.c
-SRCS        := $(MAIN_SRC) $(wildcard $(SRCDIR)/*.c)
-OBJS        := $(SRCS:.c=.o)
-LIBFT_LIB   := $(LIBFTDIR)/libft.a
+# Libraries
+LIBFT_LIB := $(LIBFTDIR)/libft.a
+MLX_LIB   := $(MLXDIR)/libmlx.a
+LDLIBS    := $(LIBFT_LIB) $(MLX_LIB) -lX11 -lXext -lm
 
-# Final executable
-TARGET    := cub3D
+# Source files
+MAIN_SRC := cub3D.c
+SRCS     := $(MAIN_SRC) $(wildcard $(SRCDIR)/*.c)
+OBJS     := $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCS)))
+
+# Target
+TARGET   := cub3D
+
+# Includes
+INCLUDES := -I$(INCDIR) -I$(LIBFTDIR) -I$(MLXDIR)
 
 # -------------------------
 #         RULES
 # -------------------------
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft mlx
 
-# Default: build libft and then the main program
+# Default rule
 all: $(TARGET)
 
-# Link everything
-$(TARGET): libft $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(TARGET)
+# Target build rule
+$(TARGET): libft mlx $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LDLIBS) -o $@
 
-# Build libft (assumes libft/Makefile knows how to build libft.a)
+# Compile object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/cub3D.o: cub3D.c | $(OBJDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Create obj dir if it doesn't exist
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+# Build libft
 libft:
 	$(MAKE) -C $(LIBFTDIR)
 
-# Compile each .c into .o
-# This pattern works for both cub3D.c and any src/*.c
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Build MLX
+mlx:
+	$(MAKE) -C $(MLXDIR)
 
-# Remove object files
+# Clean object files
 clean:
-	@rm -f $(OBJS)
+	@rm -rf $(OBJDIR)
 	$(MAKE) -C $(LIBFTDIR) clean
+	$(MAKE) -C $(MLXDIR) clean
 
-# Remove everything including the executable and libft static lib
+# Full cleanup
 fclean: clean
 	@rm -f $(TARGET)
 	$(MAKE) -C $(LIBFTDIR) fclean
 
-# Rebuild from scratch
+# Rebuild
 re: fclean all
