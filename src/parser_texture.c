@@ -18,6 +18,7 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 		if (parts)
 			ft_free_strs(parts); // You can write this to free char** arrays
 		ft_clean_up(cfg);
+		free(line);
 		exit(1);
 	}
 	printf("---------------------------------------\n");
@@ -27,16 +28,20 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 	if (!ext || ft_strncmp(ext + 1, "xpm", 3) != 0 || ft_strlen(ext + 1) != 3)
 	{
 		ft_putstr_fd("Error\nInvalid file extension\n", 2);
-		ft_free_strs(parts);
+		if (parts)
+			ft_free_strs(parts);
 		ft_clean_up(cfg);
+		free(line);
 		exit(1);
 	}
 	*destination = ft_strdup(parts[1]);
 	if (!*destination)
 	{
 		ft_putstr_fd("Error\nMalloc failed for texture path\n", 2);
-		ft_free_strs(parts);
+		if (parts)
+			ft_free_strs(parts);
 		ft_clean_up(cfg);
+		free(line);
 		exit(1);
 	}
 	ft_free_strs(parts);

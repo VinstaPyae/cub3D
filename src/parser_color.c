@@ -1,12 +1,28 @@
 #include "cub3D.h"
 
-static int	validate_color_value(char *str, t_config *cfg)
+static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_config *cfg)
 {
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]))
+		{
+			ft_putstr_fd("Error\nInvalid Color code\n", 2);
+			free(line);
+			ft_free_strs(rgb_parts);
+			ft_clean_up(cfg);
+			exit(1);
+		}
+	}
 	int	val = ft_atoi(str);
 
 	if (val < 0 || val > 255)
 	{
 		ft_putstr_fd("Error\nColor values must be between 0 and 255\n", 2);
+		free(line);
+		ft_free_strs(rgb_parts);
 		ft_clean_up(cfg);
 		exit(1);
 	}
@@ -21,19 +37,11 @@ void	parse_color(char *line, int *color_out, t_config *cfg)
 
 	if (*color_out != -1) // already set?
 	{
+		free(line);
 		ft_putstr_fd("Error\nDuplicate color definition\n", 2);
 		ft_clean_up(cfg);
 		exit(1);
 	}
-
-	// parts = ft_split(line, ' ');
-	// if (!parts || !parts[1] || parts[2])
-	// {
-	// 	ft_putstr_fd("Error\nInvalid color format\n", 2);
-	// 	ft_free_strs(parts);
-	// 	ft_clean_up(cfg);
-	// 	exit(1);
-	// }
 	parts = ft_strtrim(line, "FC \t");
 	printf("%s\n", parts);
 	rgb_parts = ft_split(parts, ',');
@@ -41,15 +49,16 @@ void	parse_color(char *line, int *color_out, t_config *cfg)
 
 	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2] || rgb_parts[3])
 	{
+		free(line);
 		ft_putstr_fd("Error\nColor must have 3 RGB values\n", 2);
 		ft_free_strs(rgb_parts);
 		ft_clean_up(cfg);
 		exit(1);
 	}
 
-	r = validate_color_value(rgb_parts[0], cfg);
-	g = validate_color_value(rgb_parts[1], cfg);
-	b = validate_color_value(rgb_parts[2], cfg);
+	r = validate_color_value(rgb_parts[0], rgb_parts, line, cfg);
+	g = validate_color_value(rgb_parts[1], rgb_parts, line, cfg);
+	b = validate_color_value(rgb_parts[2], rgb_parts, line, cfg);
 
 	ft_free_strs(rgb_parts);
 	*color_out = (r << 16) | (g << 8) | b;
