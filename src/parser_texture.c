@@ -3,6 +3,7 @@
 void	parse_texture(char *line, char **destination, t_config *cfg)
 {
 	char	**parts;
+	char	*ext;
 
 	if (*destination != NULL)
 	{
@@ -16,6 +17,17 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 		ft_putstr_fd("Error\nInvalid texture format\n", 2);
 		if (parts)
 			ft_free_strs(parts); // You can write this to free char** arrays
+		ft_clean_up(cfg);
+		exit(1);
+	}
+	printf("---------------------------------------\n");
+	for (int i=0; parts[i]; i++)
+		printf("%s\n", parts[i]);
+	ext = ft_strchr(parts[1], '.');
+	if (!ext || ft_strncmp(ext + 1, "xpm", 3) != 0 || ft_strlen(ext + 1) != 3)
+	{
+		ft_putstr_fd("Error\nInvalid file extension\n", 2);
+		ft_free_strs(parts);
 		ft_clean_up(cfg);
 		exit(1);
 	}

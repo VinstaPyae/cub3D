@@ -15,7 +15,7 @@
 # include <stdlib.h>   /* malloc, free, exit */
 # include <stdio.h>    /* perror */
 # include "libft.h"    /* your libft functions */
-# include "../minilibx-linux/mlx.h"
+# include "mlx.h"
 # include "utils.h"
 # include "parser.h"
 

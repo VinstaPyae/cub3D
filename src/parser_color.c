@@ -15,7 +15,7 @@ static int	validate_color_value(char *str, t_config *cfg)
 
 void	parse_color(char *line, int *color_out, t_config *cfg)
 {
-	char	**parts;
+	char	*parts;
 	char	**rgb_parts;
 	int		r, g, b;
 
@@ -26,16 +26,18 @@ void	parse_color(char *line, int *color_out, t_config *cfg)
 		exit(1);
 	}
 
-	parts = ft_split(line, ' ');
-	if (!parts || !parts[1] || parts[2])
-	{
-		ft_putstr_fd("Error\nInvalid color format\n", 2);
-		ft_free_strs(parts);
-		ft_clean_up(cfg);
-		exit(1);
-	}
-	rgb_parts = ft_split(parts[1], ',');
-	ft_free_strs(parts); // parts[0] = "F", parts[1] = "220,100,0"
+	// parts = ft_split(line, ' ');
+	// if (!parts || !parts[1] || parts[2])
+	// {
+	// 	ft_putstr_fd("Error\nInvalid color format\n", 2);
+	// 	ft_free_strs(parts);
+	// 	ft_clean_up(cfg);
+	// 	exit(1);
+	// }
+	parts = ft_strtrim(line, "FC \t");
+	printf("%s\n", parts);
+	rgb_parts = ft_split(parts, ',');
+	free(parts); // parts[0] = "F", parts[1] = "220,100,0"
 
 	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2] || rgb_parts[3])
 	{

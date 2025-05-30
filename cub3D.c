@@ -1,7 +1,5 @@
 #include "cub3D.h"
 
-#include "cub3D.h"
-
 void	start_game(t_config *config)
 {
 	t_game	game;
