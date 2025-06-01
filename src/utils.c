@@ -26,7 +26,25 @@ void	ft_free_strs(char **strs)
     strs = NULL;
 }
 
-void    ft_clean_up(t_config *cfg)
+void    ft_clean_plyr(t_player *plyr)
+{
+    if (plyr)
+    {
+        free(plyr);
+        plyr = NULL;
+    }
+}
+
+void    ft_clean_ray(t_ray *ray)
+{
+    if (ray)
+    {
+        free(ray);
+        ray = NULL;
+    }
+}
+
+void    ft_clean_config(t_config *cfg)
 {
     if (cfg->lines)
     {
@@ -62,5 +80,20 @@ void    ft_clean_up(t_config *cfg)
     {
         free(cfg);
         cfg = NULL;
+    }
+}
+
+void    ft_clean_up(t_game  *game)
+{
+    if (game->config)
+        ft_clean_config(game->config);
+    if (game->plyr)
+        ft_clean_plyr(game->plyr);
+    if (game->ray)
+        ft_clean_ray(game->ray);
+    if (game)
+    {
+        free(game);
+        game = NULL;
     }
 }

@@ -1,0 +1,9 @@
+#ifndef PLAYER_H
+# define PLAYER_H
+
+typedef struct s_config t_config;
+typedef struct s_player t_player;
+typedef struct s_ray t_ray;
+typedef struct s_game t_game;
+
+#endif

@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-void	parse_texture(char *line, char **destination, t_config *cfg)
+void	parse_texture(char *line, char **destination, t_game *game)
 {
 	char	**parts;
 	char	*ext;
@@ -8,7 +8,7 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 	if (*destination != NULL)
 	{
 		ft_putstr_fd("Error\nDuplicate texture identifier\n", 2);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		exit(1);
 	}
 	parts = ft_split(line, ' ');
@@ -17,7 +17,7 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 		ft_putstr_fd("Error\nInvalid texture format\n", 2);
 		if (parts)
 			ft_free_strs(parts); // You can write this to free char** arrays
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		free(line);
 		exit(1);
 	}
@@ -30,7 +30,7 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 		ft_putstr_fd("Error\nInvalid file extension\n", 2);
 		if (parts)
 			ft_free_strs(parts);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		free(line);
 		exit(1);
 	}
@@ -40,7 +40,7 @@ void	parse_texture(char *line, char **destination, t_config *cfg)
 		ft_putstr_fd("Error\nMalloc failed for texture path\n", 2);
 		if (parts)
 			ft_free_strs(parts);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		free(line);
 		exit(1);
 	}

@@ -26,41 +26,43 @@ static int	get_map_height(char **lines, int start)
 	return (count);
 }
 
-void	parse_map(char **lines, int start, t_config *cfg)
+void	parse_map(char **lines, int start, t_game *game)
 {
 	int		i = 0;
 	int		width = get_map_width(lines, start);
 	int		height = get_map_height(lines, start);
 
-	cfg->map_width = width;
-	cfg->map_height = height;
+	game->config->map_width = width;
+	game->config->map_height = height;
 
-	cfg->map = malloc(sizeof(char *) * (height + 1));
-	if (!cfg->map)
+	game->config->map = malloc(sizeof(char *) * (height + 1));
+	if (!game->config->map)
 	{
 		ft_putstr_fd("Error\nFailed to allocate map memory\n", 2);
+		ft_clean_up(game);
 		exit(1);
 	}
 
 	while (i < height)
 	{
-		cfg->map[i] = malloc(width + 1);
-		if (!cfg->map[i])
+		game->config->map[i] = malloc(width + 1);
+		if (!game->config->map[i])
 		{
 			ft_putstr_fd("Error\nFailed to allocate map line\n", 2);
+			ft_clean_up(game);
 			exit(1);
 		}
 		int j = 0;
 		while (lines[start][j])
 		{
-			cfg->map[i][j] = lines[start][j];
+			game->config->map[i][j] = lines[start][j];
 			j++;
 		}
 		while (j < width)  // pad with spaces
-			cfg->map[i][j++] = ' ';
-		cfg->map[i][j] = '\0';
+			game->config->map[i][j++] = ' ';
+		game->config->map[i][j] = '\0';
 		i++;
 		start++;
 	}
-	cfg->map[i] = NULL;  // null-terminate the 2D array
+	game->config->map[i] = NULL;  // null-terminate the 2D array
 }

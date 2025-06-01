@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_config *cfg)
+static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game *game)
 {
 	int	i;
 
@@ -12,7 +12,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_conf
 			ft_putstr_fd("Error\nInvalid Color code\n", 2);
 			free(line);
 			ft_free_strs(rgb_parts);
-			ft_clean_up(cfg);
+			ft_clean_up(game);
 			exit(1);
 		}
 	}
@@ -23,13 +23,13 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_conf
 		ft_putstr_fd("Error\nColor values must be between 0 and 255\n", 2);
 		free(line);
 		ft_free_strs(rgb_parts);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		exit(1);
 	}
 	return (val);
 }
 
-void	parse_color(char *line, int *color_out, t_config *cfg)
+void	parse_color(char *line, int *color_out, t_game *game)
 {
 	char	*parts;
 	char	**rgb_parts;
@@ -39,7 +39,7 @@ void	parse_color(char *line, int *color_out, t_config *cfg)
 	{
 		free(line);
 		ft_putstr_fd("Error\nDuplicate color definition\n", 2);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		exit(1);
 	}
 	parts = ft_strtrim(line, "FC \t");
@@ -52,13 +52,13 @@ void	parse_color(char *line, int *color_out, t_config *cfg)
 		free(line);
 		ft_putstr_fd("Error\nColor must have 3 RGB values\n", 2);
 		ft_free_strs(rgb_parts);
-		ft_clean_up(cfg);
+		ft_clean_up(game);
 		exit(1);
 	}
 
-	r = validate_color_value(rgb_parts[0], rgb_parts, line, cfg);
-	g = validate_color_value(rgb_parts[1], rgb_parts, line, cfg);
-	b = validate_color_value(rgb_parts[2], rgb_parts, line, cfg);
+	r = validate_color_value(rgb_parts[0], rgb_parts, line, game);
+	g = validate_color_value(rgb_parts[1], rgb_parts, line, game);
+	b = validate_color_value(rgb_parts[2], rgb_parts, line, game);
 
 	ft_free_strs(rgb_parts);
 	*color_out = (r << 16) | (g << 8) | b;
