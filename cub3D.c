@@ -109,7 +109,9 @@ int	main(int ac, char *av[])
 	// printf("Color: %d\n", config->floor_color);
 	parse_map(game->config->lines, game->config->map_start_indx, game);
 	validate_map(game);
-	// get_plyr_por(game);
+	get_plyr_pos(game);
+	get_plyr_dir(game);
+	raycast(game->plyr, game->ray, game);
 	for (i=0; game->config->map[i]; i++)
 		printf("%s\n", game->config->map[i]);
 	i = 0;

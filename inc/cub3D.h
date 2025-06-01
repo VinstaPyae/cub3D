@@ -6,14 +6,15 @@
 #  define BUFFER_SIZE 1
 # endif
 
-# define WIDTH 1024
-# define HEIGHT 768
+# define SCN_WIDTH 640
+# define SCN_HEIGHT 480
 
 /* system headers */
 # include <unistd.h>   /* read, write, close */
 # include <fcntl.h>    /* open flags */
 # include <stdlib.h>   /* malloc, free, exit */
 # include <stdio.h>    /* perror */
+# include <math.h>
 # include "libft.h"    /* your libft functions */
 # include "mlx.h"
 # include "utils.h"
@@ -55,15 +56,19 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-    double camera_x;
-    double ray_dir_x;
-    double ray_dir_y;
-    double deltadist_x;
-    double deltadist_y;
-    double sidedist_x;
-    double sidedist_y;
-    int step_x;
-    int step_y;
+	double camera_x;
+	double ray_dir_x;
+	double ray_dir_y;
+	double deltadist_x;
+	double deltadist_y;
+	double sidedist_x;
+	double sidedist_y;
+	int step_x;
+	int step_y;
+	int	side;
+	int mapX;
+	int mapY;
+	int hit;
 } t_ray;
 
 typedef struct s_game

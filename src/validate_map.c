@@ -1,16 +1,16 @@
 #include "cub3D.h"
 
-static int	is_player_char(char c)
+int	is_player_char(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-static int	is_valid_char(char c)
+int	is_valid_char(char c)
 {
 	return (c == '0' || c == '1' || is_player_char(c) || c == ' ');
 }
 
-static int	is_in_bounds(int y, int x, t_config *cfg)
+int	is_in_bounds(int y, int x, t_config *cfg)
 {
 	return (y >= 0 && x >= 0 && y < cfg->map_height && x < cfg->map_width);
 }

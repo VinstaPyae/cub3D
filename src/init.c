@@ -27,15 +27,19 @@ void init_player(t_player *player)
 
 void init_ray(t_ray *ray)
 {
-    ray->camera_x = 0;
-    ray->ray_dir_x = 0;
-    ray->ray_dir_y = 0;
-    ray->deltadist_x = 0;
-    ray->deltadist_y = 0;
-    ray->sidedist_x = 0;
-    ray->sidedist_y = 0;
-    ray->step_x = 0;
-    ray->step_y = 0;
+	ray->camera_x = 0;
+	ray->ray_dir_x = 0;
+	ray->ray_dir_y = 0;
+	ray->deltadist_x = 0;
+	ray->deltadist_y = 0;
+	ray->sidedist_x = 0;
+	ray->sidedist_y = 0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->side = 0;
+	ray->mapX = 0;
+	ray->mapY = 0;
+	ray->hit = 0;
 }
 
 void	init_game(t_game *game)

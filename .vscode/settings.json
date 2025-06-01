@@ -63,6 +63,8 @@
       "minishell.h": "c",
       "typeinfo": "c",
       "type_traits": "c",
-      "fcntl.h": "c"
+      "fcntl.h": "c",
+      "cub3d.h": "c",
+      "utils.h": "c"
     }
   }
