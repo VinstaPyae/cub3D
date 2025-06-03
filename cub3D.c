@@ -14,7 +14,10 @@ void	start_game(t_game *game)
 		ft_putstr_fd("Error\nFailed to create window\n", 2);
 		exit(1);
 	}
-
+	load_texture(game, &game->texture[0], game->config->texture_no); // NO
+	load_texture(game, &game->texture[1], game->config->texture_so); // SO
+	load_texture(game, &game->texture[2], game->config->texture_we); // WE
+	load_texture(game, &game->texture[3], game->config->texture_ea); // EA
 	// TEMP: fill window with a color (we'll replace this with real drawing later)
 	mlx_loop(game->mlx); // This blocks the main thread until the window is closed
 }
@@ -109,7 +112,7 @@ int	main(int ac, char *av[])
 	get_plyr_pos(game);
 	get_plyr_dir(game);
 	start_game(game);
-	// raycast(game->plyr, game->ray, game);
+	raycast(game->plyr, game->ray, game);
 	for (i=0; game->config->map[i]; i++)
 		printf("%s\n", game->config->map[i]);
 	i = 0;

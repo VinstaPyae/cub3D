@@ -8,6 +8,8 @@
 
 # define SCN_WIDTH 640
 # define SCN_HEIGHT 480
+# define texWidth 64
+# define texHeight 64
 
 /* system headers */
 # include <unistd.h>   /* read, write, close */
@@ -43,6 +45,16 @@ typedef struct s_config
     int     map_height;
     int     map_start_indx;
 }   t_config;
+
+typedef struct s_texture {
+	void	*img;
+	int		width;
+	int		height;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_texture;
 
 typedef struct s_player
 {
@@ -82,8 +94,10 @@ typedef struct s_game
 	t_config *config;
 	t_player *plyr;
 	t_ray	 *ray;
+	t_texture texture[4];
 }	t_game;
 
 void	start_game(t_game *game);
+void	load_texture(t_game *game, t_texture *tex, char *path);
 
 #endif /* CUB3D_H */
