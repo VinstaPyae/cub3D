@@ -2,9 +2,9 @@
 
 int isWall(int x, int y, t_game *game)
 {
-	if (x < 0 || x >= game->config->map_width || y < 0 || y >= game->config->map_height)
-		return 1;
-	return game->config->map[x][y] != 0;
+    if (x < 0 || x >= game->config->map_width || y < 0 || y >= game->config->map_height)
+        return 1;
+    return game->config->map[x][y] != 0;
 }
 
 int raycast(t_player *player, t_ray *ray, t_game *game)
@@ -72,6 +72,19 @@ int raycast(t_player *player, t_ray *ray, t_game *game)
             if (isWall(ray->mapX, ray->mapY, game))
                 ray->hit = 1;
         }
+
+        if (ray->side == 0)
+            ray->pd_wall_dist = ray->sidedist_x - ray->deltadist_x;
+        else
+            ray->pd_wall_dist = ray->sidedist_y - ray->deltadist_y;
+
+        ray->wall_height = (int)(SCN_HEIGHT / ray->pd_wall_dist);
+        ray->wall_top = -(ray->wall_height) / 2 + SCN_HEIGHT / 2;
+        if (ray->wall_top < 0)
+            ray->wall_top = 0;
+        ray->wall_btm = ray->wall_height / 2 + SCN_HEIGHT / 2;
+        if (ray->wall_btm >= SCN_HEIGHT)
+            ray->wall_btm = SCN_HEIGHT - 1;
     }
-	return (0);
+    return (0);
 }

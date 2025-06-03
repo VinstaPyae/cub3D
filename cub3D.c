@@ -1,26 +1,23 @@
 #include "cub3D.h"
 
-// void	start_game(t_config *config)
-// {
-// 	t_game	*game;
+void	start_game(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+	{
+		ft_putstr_fd("Error\nFailed to initialize MiniLibX\n", 2);
+		exit(1);
+	}
+	game->win = mlx_new_window(game->mlx, SCN_WIDTH, SCN_HEIGHT, "cub3D");
+	if (!game->win)
+	{
+		ft_putstr_fd("Error\nFailed to create window\n", 2);
+		exit(1);
+	}
 
-// 	game->config = *config; // Copy the config into the game struct
-// 	game->mlx = mlx_init();
-// 	if (!game->mlx)
-// 	{
-// 		ft_putstr_fd("Error\nFailed to initialize MiniLibX\n", 2);
-// 		exit(1);
-// 	}
-// 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "cub3D");
-// 	if (!game->win)
-// 	{
-// 		ft_putstr_fd("Error\nFailed to create window\n", 2);
-// 		exit(1);
-// 	}
-
-// 	// TEMP: fill window with a color (we'll replace this with real drawing later)
-// 	mlx_loop(game->mlx); // This blocks the main thread until the window is closed
-// }
+	// TEMP: fill window with a color (we'll replace this with real drawing later)
+	mlx_loop(game->mlx); // This blocks the main thread until the window is closed
+}
 
 
 int	check_file_extension(char *filename)
@@ -111,7 +108,8 @@ int	main(int ac, char *av[])
 	validate_map(game);
 	get_plyr_pos(game);
 	get_plyr_dir(game);
-	raycast(game->plyr, game->ray, game);
+	start_game(game);
+	// raycast(game->plyr, game->ray, game);
 	for (i=0; game->config->map[i]; i++)
 		printf("%s\n", game->config->map[i]);
 	i = 0;

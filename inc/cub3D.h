@@ -63,6 +63,10 @@ typedef struct s_ray
 	double deltadist_y;
 	double sidedist_x;
 	double sidedist_y;
+	double pd_wall_dist;
+	int wall_height;
+	int wall_top;
+	int wall_btm;
 	int step_x;
 	int step_y;
 	int	side;
@@ -80,6 +84,6 @@ typedef struct s_game
 	t_ray	 *ray;
 }	t_game;
 
-void	start_game(t_config *config);
+void	start_game(t_game *game);
 
 #endif /* CUB3D_H */
