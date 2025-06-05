@@ -95,9 +95,13 @@ typedef struct s_game
 	t_player *plyr;
 	t_ray	 *ray;
 	t_texture texture[4];
+	t_texture img;
 }	t_game;
 
 void	start_game(t_game *game);
 void	load_texture(t_game *game, t_texture *tex, char *path);
+int	get_texture_pixel(t_texture *tex, int x, int y);
+t_texture *select_texture(t_game *game, t_ray *ray);
+void	draw_pixel_to_buffer(t_game *game, int x, int y, int color);
 
-#endif /* CUB3D_H */
+#endif

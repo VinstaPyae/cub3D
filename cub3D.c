@@ -113,6 +113,7 @@ int	main(int ac, char *av[])
 	get_plyr_dir(game);
 	start_game(game);
 	raycast(game->plyr, game->ray, game);
+
 	for (i=0; game->config->map[i]; i++)
 		printf("%s\n", game->config->map[i]);
 	i = 0;

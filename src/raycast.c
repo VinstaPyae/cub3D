@@ -85,6 +85,35 @@ int raycast(t_player *player, t_ray *ray, t_game *game)
         ray->wall_btm = ray->wall_height / 2 + SCN_HEIGHT / 2;
         if (ray->wall_btm >= SCN_HEIGHT)
             ray->wall_btm = SCN_HEIGHT - 1;
+        
+        t_texture *tex = select_texture(game, game->ray);
+        double wall_x;
+
+        if (game->ray->side == 0)
+            wall_x = game->plyr->pos_y + game->ray->pd_wall_dist * game->ray->ray_dir_y;
+        else
+            wall_x = game->plyr->pos_x + game->ray->pd_wall_dist * game->ray->ray_dir_x;
+
+        wall_x -= floor(wall_x);  // get only the fractional part (0.0–1.0)
+
+        int tex_x = (int)(wall_x * (double)tex->width);
+
+        if ((game->ray->side == 0 && game->ray->ray_dir_x > 0) ||
+            (game->ray->side == 1 && game->ray->ray_dir_y < 0))
+            tex_x = tex->width - tex_x - 1;
+
+        double step = 1.0 * tex->height / game->ray->wall_height;
+        double tex_pos = (game->ray->wall_top - SCN_HEIGHT / 2 + game->ray->wall_height / 2) * step;
+
+        for (int y = game->ray->wall_top; y < game->ray->wall_btm; y++)
+        {
+            int tex_y = (int)tex_pos & (tex->height - 1); // wrap/clamp
+            tex_pos += step;
+
+            int color = *(int *)(tex->addr + (tex_y * tex->line_len + tex_x * (tex->bpp / 8)));
+            draw_pixel_to_buffer(game, x, y, color);
+        }
+    x++;
     }
     return (0);
 }
