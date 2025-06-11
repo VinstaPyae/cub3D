@@ -12,6 +12,8 @@ int raycast(t_player *player, t_ray *ray, t_game *game)
     int x;
 
     x = 0;
+    init_texture_pixels(game);
+    init_ray(game->ray);
     while (x < SCN_WIDTH)
     {
         ray->camera_x = 2 * x / (double)SCN_WIDTH - 1;
@@ -86,33 +88,33 @@ int raycast(t_player *player, t_ray *ray, t_game *game)
         if (ray->wall_btm >= SCN_HEIGHT)
             ray->wall_btm = SCN_HEIGHT - 1;
         
-        t_texture *tex = select_texture(game, game->ray);
-        double wall_x;
+        // t_tex *tex = select_texture(game, game->ray);
+        // double wall_x;
 
-        if (game->ray->side == 0)
-            wall_x = game->plyr->pos_y + game->ray->pd_wall_dist * game->ray->ray_dir_y;
+        if (ray->side == 0)
+            ray->wall_x = player->pos_y + ray->pd_wall_dist * ray->ray_dir_y;
         else
-            wall_x = game->plyr->pos_x + game->ray->pd_wall_dist * game->ray->ray_dir_x;
+            ray->wall_x = player->pos_x + ray->pd_wall_dist * ray->ray_dir_x;
 
-        wall_x -= floor(wall_x);  // get only the fractional part (0.0–1.0)
+        ray->wall_x -= floor(ray->wall_x);  // get only the fractional part (0.0–1.0)
+        update_texture_pixels(game, game->texture, ray, x);
+        // int tex_x = (int)(wall_x * (double)tex->width);
 
-        int tex_x = (int)(wall_x * (double)tex->width);
+        // if ((game->ray->side == 0 && game->ray->ray_dir_x > 0) ||
+        //     (game->ray->side == 1 && game->ray->ray_dir_y < 0))
+        //     tex_x = tex->width - tex_x - 1;
 
-        if ((game->ray->side == 0 && game->ray->ray_dir_x > 0) ||
-            (game->ray->side == 1 && game->ray->ray_dir_y < 0))
-            tex_x = tex->width - tex_x - 1;
+        // double step = 1.0 * tex->height / game->ray->wall_height;
+        // double tex_pos = (game->ray->wall_top - SCN_HEIGHT / 2 + game->ray->wall_height / 2) * step;
 
-        double step = 1.0 * tex->height / game->ray->wall_height;
-        double tex_pos = (game->ray->wall_top - SCN_HEIGHT / 2 + game->ray->wall_height / 2) * step;
+        // for (int y = game->ray->wall_top; y < game->ray->wall_btm; y++)
+        // {
+        //     int tex_y = (int)tex_pos & (tex->height - 1); // wrap/clamp
+        //     tex_pos += step;
 
-        for (int y = game->ray->wall_top; y < game->ray->wall_btm; y++)
-        {
-            int tex_y = (int)tex_pos & (tex->height - 1); // wrap/clamp
-            tex_pos += step;
-
-            int color = *(int *)(tex->addr + (tex_y * tex->line_len + tex_x * (tex->bpp / 8)));
-            draw_pixel_to_buffer(game, x, y, color);
-        }
+        //     int color = *(int *)(tex->addr + (tex_y * tex->line_len + tex_x * (tex->bpp / 8)));
+        //     draw_pixel_to_buffer(game, x, y, color);
+        // }
     x++;
     }
     return (0);

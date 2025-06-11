@@ -11,7 +11,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 		{
 			ft_putstr_fd("Error\nInvalid Color code\n", 2);
 			free(line);
-			ft_free_strs(rgb_parts);
+			ft_free_strs((void **)(void **)rgb_parts);
 			ft_clean_up(game);
 			exit(1);
 		}
@@ -22,7 +22,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 	{
 		ft_putstr_fd("Error\nColor values must be between 0 and 255\n", 2);
 		free(line);
-		ft_free_strs(rgb_parts);
+		ft_free_strs((void **)(void **)rgb_parts);
 		ft_clean_up(game);
 		exit(1);
 	}
@@ -51,7 +51,7 @@ void	parse_color(char *line, int *color_out, t_game *game)
 	{
 		free(line);
 		ft_putstr_fd("Error\nColor must have 3 RGB values\n", 2);
-		ft_free_strs(rgb_parts);
+		ft_free_strs((void **)rgb_parts);
 		ft_clean_up(game);
 		exit(1);
 	}
@@ -60,6 +60,6 @@ void	parse_color(char *line, int *color_out, t_game *game)
 	g = validate_color_value(rgb_parts[1], rgb_parts, line, game);
 	b = validate_color_value(rgb_parts[2], rgb_parts, line, game);
 
-	ft_free_strs(rgb_parts);
+	ft_free_strs((void **)rgb_parts);
 	*color_out = (r << 16) | (g << 8) | b;
 }

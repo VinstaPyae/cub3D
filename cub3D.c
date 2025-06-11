@@ -1,26 +1,26 @@
 #include "cub3D.h"
 
-void	start_game(t_game *game)
-{
-	game->mlx = mlx_init();
-	if (!game->mlx)
-	{
-		ft_putstr_fd("Error\nFailed to initialize MiniLibX\n", 2);
-		exit(1);
-	}
-	game->win = mlx_new_window(game->mlx, SCN_WIDTH, SCN_HEIGHT, "cub3D");
-	if (!game->win)
-	{
-		ft_putstr_fd("Error\nFailed to create window\n", 2);
-		exit(1);
-	}
-	load_texture(game, &game->texture[0], game->config->texture_no); // NO
-	load_texture(game, &game->texture[1], game->config->texture_so); // SO
-	load_texture(game, &game->texture[2], game->config->texture_we); // WE
-	load_texture(game, &game->texture[3], game->config->texture_ea); // EA
-	// TEMP: fill window with a color (we'll replace this with real drawing later)
-	mlx_loop(game->mlx); // This blocks the main thread until the window is closed
-}
+// void	start_game(t_game *game)
+// {
+// 	game->mlx = mlx_init();
+// 	if (!game->mlx)
+// 	{
+// 		ft_putstr_fd("Error\nFailed to initialize MiniLibX\n", 2);
+// 		exit(1);
+// 	}
+// 	game->win = mlx_new_window(game->mlx, SCN_WIDTH, SCN_HEIGHT, "cub3D");
+// 	if (!game->win)
+// 	{
+// 		ft_putstr_fd("Error\nFailed to create window\n", 2);
+// 		exit(1);
+// 	}
+// 	load_texture(game, &game->texture[0], game->config->texture_no); // NO
+// 	load_texture(game, &game->texture[1], game->config->texture_so); // SO
+// 	load_texture(game, &game->texture[2], game->config->texture_we); // WE
+// 	load_texture(game, &game->texture[3], game->config->texture_ea); // EA
+// 	// TEMP: fill window with a color (we'll replace this with real drawing later)
+// 	//  // This blocks the main thread until the window is closed
+// }
 
 
 int	check_file_extension(char *filename)
@@ -109,14 +109,15 @@ int	main(int ac, char *av[])
 	// printf("Color: %d\n", config->floor_color);
 	parse_map(game->config->lines, game->config->map_start_indx, game);
 	validate_map(game);
-	get_plyr_pos(game);
-	get_plyr_dir(game);
-	start_game(game);
-	raycast(game->plyr, game->ray, game);
-
 	for (i=0; game->config->map[i]; i++)
 		printf("%s\n", game->config->map[i]);
-	i = 0;
+	init_mlx(game);
+	init_textures(game);
+	get_plyr_pos(game);
+	get_plyr_dir(game);
+	// start_game(game);
+	printf("finish game!\n");
+	raycast(game->plyr, game->ray, game);
 	ft_clean_up(game);
 	return (0);
 }
