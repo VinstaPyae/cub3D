@@ -112,13 +112,13 @@ int raycast(t_game *game)
             if (ray->sidedist_x < ray->sidedist_y)
             {
                 ray->sidedist_x += ray->deltadist_x;
-                ray->mapX += ray->step_x;
+                ray->mapY += ray->step_x;
                 ray->side = 0;
             }
             else
             {
                 ray->sidedist_y += ray->deltadist_y;
-                ray->mapY += ray->step_y;
+                ray->mapX += ray->step_y;
                 ray->side = 1;
             }
 
@@ -129,9 +129,10 @@ int raycast(t_game *game)
 			|| ray->mapY > game->config->map_height - 0.25
 			|| ray->mapX > game->config->map_width - 1.25)
 			    break ;
-            else if (game->config->map[ray->mapY][ray->mapX] > '0')
+            else if (game->config->map[ray->mapX][ray->mapY] > '0')
                 ray->hit = 1;
         }
+        printf("ray side dist x: %f, y: %f\n", ray->sidedist_x, ray->sidedist_y);
         if (ray->side == 0)
             ray->pd_wall_dist = ray->sidedist_x - ray->deltadist_x;
         else
@@ -144,6 +145,7 @@ int raycast(t_game *game)
         ray->wall_btm = ray->wall_height / 2 + SCN_HEIGHT / 2;
         if (ray->wall_btm >= SCN_HEIGHT)
             ray->wall_btm = SCN_HEIGHT - 1;
+        printf("ray pd_wall_dist: %f\n", ray->pd_wall_dist);
         printf("wall btm: %d\n", ray->wall_btm);
         printf("wall top: %d\n", ray->wall_top);
         printf("wall height: %d\n", ray->wall_height);
