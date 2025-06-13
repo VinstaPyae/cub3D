@@ -80,6 +80,8 @@ void	update_texture_pixels(t_game *game, t_tex *tex, t_ray *ray, int x)
 	tex->pos = (ray->wall_top - SCN_HEIGHT / 2
 			+ ray->wall_height / 2) * tex->step;
 	y = ray->wall_top;
+	// printf("x: %d, wall_top: %d, wall_btm: %d, wall_height: %d\n",
+	// 		x, ray->wall_top, ray->wall_btm, ray->wall_height);
 	while (y < ray->wall_btm)
 	{
 		tex->y = (int)tex->pos & (tex->size - 1);

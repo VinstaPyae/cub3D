@@ -121,11 +121,6 @@ void    ft_clean_up(t_game  *game)
         ft_free_strs((void **)game->tex_c);
     if (game->tex_pixels)
         ft_free_strs((void **)game->tex_pixels);
-    if (game)
-    {
-        free(game);
-        game = NULL;
-    }
 }
 
 void    ft_clean_exit(t_game *game, int status)

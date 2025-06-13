@@ -6,6 +6,7 @@ typedef struct s_player t_player;
 typedef struct s_ray t_ray;
 typedef struct s_game t_game;
 
-int raycast(t_player *player, t_ray *ray, t_game *game);
+int     raycast(t_game *game);
+void	render_frame(t_game *game);
 
 #endif

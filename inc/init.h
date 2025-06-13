@@ -17,5 +17,7 @@ void    init_mlx(t_game *game);
 void	init_texture_img(t_game *game, t_img *image, char *path);
 void	init_textures(t_game *game);
 void	init_img_reset(t_img *img);
+void	init_texture_img(t_game *game, t_img *image, char *path);
+void	init_img(t_game *game, t_img *image, int width, int height);
 
 #endif

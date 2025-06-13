@@ -1,5 +1,16 @@
 #include "cub3D.h"
 
+void	init_img(t_game *game, t_img *image, int width, int height)
+{
+	init_img_reset(image);
+	image->img = mlx_new_image(game->mlx, width, height);
+	if (image->img == NULL)
+		ft_clean_exit(game, show_err("mlx", ERR_MLX_IMG, 1));
+	image->addr = (int *)mlx_get_data_addr(image->img, &image->pixel_bits,
+			&image->size_line, &image->endian);
+	return ;
+}
+
 void	init_texture_img(t_game *game, t_img *image, char *path)
 {
 	init_img_reset(image);

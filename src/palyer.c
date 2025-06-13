@@ -13,8 +13,8 @@ void	get_plyr_pos(t_game *game)
 		{
 			if (is_player_char(game->config->map[x][y]))
 			{
-				game->plyr->pos_x = (double)x;
-				game->plyr->pos_y = (double)y;
+				game->plyr->pos_x = (double)x + 0.5;
+				game->plyr->pos_y = (double)y + 0.5;
 				// printf("found\n");
 			}
 			y++;

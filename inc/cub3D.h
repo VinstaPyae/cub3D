@@ -155,12 +155,6 @@ typedef struct s_game
 	t_img img;
 }	t_game;
 
-// void	start_game(t_game *game);
-// void	load_texture(t_game *game, t_tex *tex, char *path);
-// int	get_texture_pixel(t_tex *tex, int x, int y);
-// t_tex *select_texture(t_game *game, t_ray *ray);
-// void	draw_pixel_to_buffer(t_game *game, int x, int y, int color);
-
 //texture
 void	init_texture_pixels(t_game *game);
 void	update_texture_pixels(t_game *game, t_tex *tex, t_ray *ray, int x);

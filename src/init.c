@@ -82,9 +82,33 @@ void	init_game(t_game *game)
 {
 	game->mlx = NULL;
 	game->win = NULL;
+	game->config = malloc(sizeof(t_config));
+    if (!game->config)
+    {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
 	init_config(game->config);
+	game->plyr = malloc(sizeof(t_player));
+    if (!game->plyr)
+    {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
 	init_player(game->plyr);
 	// init_ray(game->ray);
+	game->texture = malloc(sizeof(t_tex));
+    if (!game->texture)
+    {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
+	game->ray = malloc(sizeof(t_ray));
+    if (!game->ray)
+    {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
 	init_tex(game->texture);
 	init_img_reset(&game->img);
 	game->tex_pixels = NULL;
