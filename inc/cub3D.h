@@ -10,6 +10,17 @@
 # define SCN_HEIGHT 480
 # define TEX_SIZE 64
 
+# define MOVE_SPEED 0.1
+# define ROT_SPEED 0.05
+
+#define KEY_ESC 65307
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
+
 # define ERR_USAGE "usage: ./cub3d <path/to/map.cub>"
 
 # define ERR_FILE_NOT_CUB "Not a .cub file"
@@ -49,6 +60,8 @@
 # include "init.h"
 # include "player.h"
 # include "raycast.h"
+
+# include <X11/keysym.h>
 
 /*
  * Configuration structure: holds all parsed .cub data
@@ -153,9 +166,25 @@ typedef struct s_game
 	t_ray	 *ray;
 	t_tex *texture;
 	t_img img;
+	int key_w;
+	int key_a;
+	int key_s;
+	int key_d;
+	int key_left;
+	int key_right;
 }	t_game;
 
 //texture
 void	init_texture_pixels(t_game *game);
 void	update_texture_pixels(t_game *game, t_tex *tex, t_ray *ray, int x);
+
+//key
+void setup_hooks(t_game *game);
+int key_press(int key, t_game *game);
+int close_window(t_game *game);
+int key_release(int key, t_game *game);
+void handle_movement(t_game *game);
+void rotate_l_or_r(t_player *player, double angle);
+
+int render_loop(t_game *game);
 #endif

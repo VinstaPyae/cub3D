@@ -119,6 +119,8 @@ int	main(int ac, char *av[])
 	raycast(&game);
 	render_frame(&game);
 	printf("Raycast called, SCN_WIDTH: %d, SCN_HEIGHT: %d\n", SCN_WIDTH, SCN_HEIGHT);
+	setup_hooks(&game);
+	mlx_loop_hook(game.mlx, render_loop, &game);
 	mlx_loop(game.mlx);
 	ft_clean_up(&game);
 	printf("finish game!\n");

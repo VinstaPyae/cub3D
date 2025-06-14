@@ -8,5 +8,5 @@ typedef struct s_game t_game;
 
 int     raycast(t_game *game);
 void	render_frame(t_game *game);
-
+int isWall(int x, int y, t_game *game);
 #endif
