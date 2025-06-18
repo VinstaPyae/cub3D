@@ -33,17 +33,17 @@ int key_press(int key, t_game *game)
         ft_clean_up(game);
         exit(0);
     }
-    else if (key == KEY_W)
+    if (key == KEY_W)
         game->key_w = 1;
-    else if (key == KEY_S)
+    if (key == KEY_S)
         game->key_s = 1;
-    else if (key == KEY_A)
+    if (key == KEY_A)
         game->key_a = 1;
-    else if (key == KEY_D)
+    if (key == KEY_D)
         game->key_d = 1;
-    else if (key == KEY_LEFT)
+    if (key == KEY_LEFT)
         game->key_left = 1;
-    else if (key == KEY_RIGHT)
+    if (key == KEY_RIGHT)
         game->key_right = 1;
     return (0);
 }
@@ -52,15 +52,15 @@ int key_release(int key, t_game *game)
 {
     if (key == KEY_W)
         game->key_w = 0;
-    else if (key == KEY_S)
+    if (key == KEY_S)
         game->key_s = 0;
-    else if (key == KEY_A)
+    if (key == KEY_A)
         game->key_a = 0;
-    else if (key == KEY_D)
+    if (key == KEY_D)
         game->key_d = 0;
-    else if (key == KEY_LEFT)
+    if (key == KEY_LEFT)
         game->key_left = 0;
-    else if (key == KEY_RIGHT)
+    if (key == KEY_RIGHT)
         game->key_right = 0;
     return (0);
 }
@@ -109,20 +109,20 @@ void handle_movement(t_game *game)
     // Forward/backward movement
     if (game->key_w)
     {
-        new_y = game->plyr->pos_y + game->plyr->dir_y * move_step;
         new_x = game->plyr->pos_x + game->plyr->dir_x * move_step;
-        // if (!isWall(new_x, game->plyr->pos_y, game))
-            game->plyr->pos_y = new_y;
-        // if (!isWall(game->plyr->pos_x, new_y, game))
+        new_y = game->plyr->pos_y + game->plyr->dir_y * move_step;
+        if (!isWall(new_x, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
+        if (!isWall(game->plyr->pos_x, new_y, game))
+            game->plyr->pos_y = new_y;
     }
     if (game->key_s)
     {
         new_x = game->plyr->pos_x - game->plyr->dir_x * move_step;
         new_y = game->plyr->pos_y - game->plyr->dir_y * move_step;
-        //if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        // if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y, game))
             game->plyr->pos_y = new_y;
     }
 
@@ -131,18 +131,18 @@ void handle_movement(t_game *game)
     {
         new_x = game->plyr->pos_x + game->plyr->dir_y * move_step;
         new_y = game->plyr->pos_y - game->plyr->dir_x * move_step;
-        //if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        // if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y, game))
             game->plyr->pos_y = new_y;
     }
     if (game->key_d)
     {
         new_x = game->plyr->pos_x - game->plyr->dir_y * move_step;
         new_y = game->plyr->pos_y + game->plyr->dir_x * move_step;
-        //if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        // if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y, game))
             game->plyr->pos_y = new_y;
     }
 

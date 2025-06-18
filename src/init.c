@@ -109,6 +109,12 @@ void	init_game(t_game *game)
         perror("malloc failed");
         exit(EXIT_FAILURE);
     }
+	game->key_w = 0;
+	game->key_a = 0;
+	game->key_s = 0;
+	game->key_d = 0;
+	game->key_left = 0;
+	game->key_right = 0;
 	init_tex(game->texture);
 	init_img_reset(&game->img);
 	game->tex_pixels = NULL;
