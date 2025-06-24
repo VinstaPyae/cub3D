@@ -34,6 +34,7 @@ void	parse_color(char *line, int *color_out, t_game *game)
 	char	*parts;
 	char	**rgb_parts;
 	int		r, g, b;
+	int		i;
 
 	if (*color_out != -1) // already set?
 	{
@@ -43,8 +44,14 @@ void	parse_color(char *line, int *color_out, t_game *game)
 		exit(1);
 	}
 	parts = ft_strtrim(line, "FC \t");
-	printf("%s\n", parts);
+	printf("Parts: %s\n", parts);
 	rgb_parts = ft_split(parts, ',');
+	i =  0;
+	while (rgb_parts[i])
+	{
+		rgb_parts[i] = ft_strtrim(rgb_parts[i], " \t");
+		i++;
+	}
 	free(parts); // parts[0] = "F", parts[1] = "220,100,0"
 
 	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2] || rgb_parts[3])
