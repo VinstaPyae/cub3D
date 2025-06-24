@@ -52,10 +52,16 @@ void	parse_map(char **lines, int start, t_game *game)
 			ft_clean_up(game);
 			exit(1);
 		}
+		if (lines[start][0] == '\0')  // check for empty line
+		{
+			printf("Error\n Empty line found in map\n");
+			ft_clean_exit(game, 1);
+		}
 		int j = 0;
 		while (lines[start][j])
 		{
 			game->config->map[i][j] = lines[start][j];
+			printf("%c",lines[start][j]);
 			j++;
 		}
 		while (j < width)  // pad with spaces
