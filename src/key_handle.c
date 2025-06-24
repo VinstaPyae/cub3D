@@ -111,18 +111,18 @@ void handle_movement(t_game *game)
     {
         new_x = game->plyr->pos_x + game->plyr->dir_x * move_step;
         new_y = game->plyr->pos_y + game->plyr->dir_y * move_step;
-        if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x + game->plyr->dir_x * Wall_Bounce, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y + game->plyr->dir_y * Wall_Bounce, game))
             game->plyr->pos_y = new_y;
     }
     if (game->key_s)
     {
         new_x = game->plyr->pos_x - game->plyr->dir_x * move_step;
         new_y = game->plyr->pos_y - game->plyr->dir_y * move_step;
-        if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x - game->plyr->dir_x * Wall_Bounce, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y - game->plyr->dir_y * Wall_Bounce, game))
             game->plyr->pos_y = new_y;
     }
 
@@ -131,18 +131,18 @@ void handle_movement(t_game *game)
     {
         new_x = game->plyr->pos_x + game->plyr->dir_y * move_step;
         new_y = game->plyr->pos_y - game->plyr->dir_x * move_step;
-        if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x + game->plyr->dir_y * Wall_Bounce, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y - game->plyr->dir_x * Wall_Bounce, game))
             game->plyr->pos_y = new_y;
     }
     if (game->key_d)
     {
         new_x = game->plyr->pos_x - game->plyr->dir_y * move_step;
         new_y = game->plyr->pos_y + game->plyr->dir_x * move_step;
-        if (!isWall(new_x, game->plyr->pos_y, game))
+        if (!isWall(new_x - game->plyr->dir_y * Wall_Bounce, game->plyr->pos_y, game))
             game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y, game))
+        if (!isWall(game->plyr->pos_x, new_y + game->plyr->dir_x * Wall_Bounce, game))
             game->plyr->pos_y = new_y;
     }
 

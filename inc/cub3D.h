@@ -10,7 +10,7 @@
 # define SCN_HEIGHT 480
 # define TEX_SIZE 64
 
-# define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.01
 # define ROT_SPEED 0.05
 
 #define KEY_ESC 65307
@@ -20,6 +20,7 @@
 #define KEY_D 100
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
+#define Wall_Bounce 0.1
 
 # define ERR_USAGE "usage: ./cub3d <path/to/map.cub>"
 
