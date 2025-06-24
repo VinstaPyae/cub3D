@@ -105,8 +105,6 @@ int	main(int ac, char *av[])
 		ft_clean_up(&game);
 		exit(1);
 	}
-	// printf("Color: %d\n", config->ceiling_color);
-	// printf("Color: %d\n", config->floor_color);
 	parse_map(game.config->lines, game.config->map_start_indx, &game);
 	validate_map(&game);
 	for (i=0; game.config->map[i]; i++)

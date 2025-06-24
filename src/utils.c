@@ -105,6 +105,11 @@ static void	free_tex(t_tex *textures)
 		free(textures->floor);
 	if (textures->ceiling)
 		free(textures->ceiling);
+    if (textures)
+    {
+        free(textures);
+        textures = NULL;
+    }
 }
 
 void    ft_clean_up(t_game  *game)

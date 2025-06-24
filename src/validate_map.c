@@ -31,8 +31,7 @@ static void	check_enclosure(t_game *game, int y, int x)
 		if (!is_in_bounds(ny, nx, game->config) || game->config->map[ny][nx] == ' ')
 		{
 			ft_putstr_fd("Error\nMap is not enclosed by walls\n", 2);
-			ft_clean_up(game);
-			exit(1);
+			ft_clean_exit(game, 1);
 		}
 		i++;
 	}
