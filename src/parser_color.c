@@ -49,7 +49,9 @@ void	parse_color(char *line, int *color_out, t_game *game)
 	i =  0;
 	while (rgb_parts[i])
 	{
-		rgb_parts[i] = ft_strtrim(rgb_parts[i], " \t");
+		char *trimmed = ft_strtrim(rgb_parts[i], " \t");
+		free(rgb_parts[i]);
+		rgb_parts[i] = trimmed;
 		i++;
 	}
 	free(parts); // parts[0] = "F", parts[1] = "220,100,0"

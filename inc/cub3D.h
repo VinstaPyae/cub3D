@@ -6,12 +6,12 @@
 #  define BUFFER_SIZE 1
 # endif
 
-# define SCN_WIDTH 640
-# define SCN_HEIGHT 480
+# define SCN_WIDTH 1080
+# define SCN_HEIGHT 720
 # define TEX_SIZE 64
 
-# define MOVE_SPEED 0.01
-# define ROT_SPEED 0.05
+# define MOVE_SPEED 0.015
+# define ROT_SPEED 0.025
 
 #define KEY_ESC 65307
 #define KEY_W 119
@@ -61,7 +61,7 @@
 # include "init.h"
 # include "player.h"
 # include "raycast.h"
-
+# include <stdbool.h>
 # include <X11/keysym.h>
 
 /*
