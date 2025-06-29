@@ -28,42 +28,64 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 	}
 	return (val);
 }
-
-void	parse_color(char *line, int *color_out, t_game *game)
+static void check_duplicate_color(int *color_out, char *line, t_game *game)
 {
-	char	*parts;
-	char	**rgb_parts;
-	int		r, g, b;
-	int		i;
-
-	if (*color_out != -1) // already set?
+	if (*color_out != -1)
 	{
 		free(line);
 		ft_putstr_fd("Error\nDuplicate color definition\n", 2);
 		ft_clean_up(game);
 		exit(1);
 	}
+}
+
+static char **prepare_rgb_parts(char *line)
+{
+	char	*parts;
+	char	**rgb_parts;
+	int		i;
+
+	i = 0;
+	while (line[i] == 'F' || line[i] == 'C')
+		i++;
+	if (i > 1)
+		return (NULL); // Invalid format, should be "F" or "C" followed by RGB values
 	parts = ft_strtrim(line, "FC \t");
 	printf("Parts: %s\n", parts);
 	rgb_parts = ft_split(parts, ',');
-	i =  0;
-	while (rgb_parts[i])
+	free(parts);
+	
+	i = 0;
+	while (rgb_parts && rgb_parts[i])
 	{
 		char *trimmed = ft_strtrim(rgb_parts[i], " \t");
 		free(rgb_parts[i]);
 		rgb_parts[i] = trimmed;
 		i++;
 	}
-	free(parts); // parts[0] = "F", parts[1] = "220,100,0"
+	return (rgb_parts);
+}
 
+static void validate_rgb_format(char **rgb_parts, char *line, t_game *game)
+{
 	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2] || rgb_parts[3])
 	{
 		free(line);
-		ft_putstr_fd("Error\nColor must have 3 RGB values\n", 2);
+		ft_putstr_fd("Error\nInvalid color format\n", 2);
 		ft_free_arr((void **)rgb_parts);
 		ft_clean_up(game);
 		exit(1);
 	}
+}
+
+void	parse_color(char *line, int *color_out, t_game *game)
+{
+	char	**rgb_parts;
+	int		r, g, b;
+
+	check_duplicate_color(color_out, line, game);
+	rgb_parts = prepare_rgb_parts(line);
+	validate_rgb_format(rgb_parts, line, game);
 
 	r = validate_color_value(rgb_parts[0], rgb_parts, line, game);
 	g = validate_color_value(rgb_parts[1], rgb_parts, line, game);

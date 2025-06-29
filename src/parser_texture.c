@@ -29,66 +29,51 @@ static bool	is_acessible(char *path)
 	return (true);
 }
 
-void	parse_texture(char *line, char **destination, t_game *game)
+static void handle_error(char *msg, char **parts, t_game *game, char *line)
 {
-	char	**parts;
-	char	*ext;
+	ft_putstr_fd(msg, 2);
+	if (parts)
+		ft_free_arr((void **)parts);
+	free(line);
+	ft_clean_exit(game, 1);
+}
+
+static void validate_texture_format(char *path, char **parts, t_game *game, char *line)
+{
+	char *ext;
+
+	if (is_dir(path))
+		handle_error("Error\nTexture path is a directory, not a file\n", 
+			parts, game, line);
+	ext = ft_strrchr(path, '.');
+	if (ext == NULL || ft_strncmp(ext, ".xpm", ft_strlen(ext)) != 0)
+		handle_error("Error\nTexture file must be .xpm format\n", 
+			parts, game, line);
+	if (is_acessible(path) == false)
+		handle_error("", parts, game, line);
+}
+
+static char *extract_texture_path(char **parts, t_game *game, char *line)
+{
+	char *path;
+
+	path = ft_strdup(parts[1]);
+	if (!path)
+		handle_error("Error\nMalloc failed for texture path\n", 
+			parts, game, line);
+	return (path);
+}
+
+void parse_texture(char *line, char **destination, t_game *game)
+{
+	char **parts;
 
 	if (*destination != NULL)
-	{
-		ft_putstr_fd("Error\nDuplicate texture identifier\n", 2);
-		ft_clean_up(game);
-		exit(1);
-	}
+		handle_error("Error\nDuplicate texture identifier\n", NULL, game, line);
 	parts = ft_split(line, ' ');
 	if (!parts)
-	{
-		ft_putstr_fd("Error\nTexture not found\n", 2);
-		if (parts)
-			ft_free_arr((void **)parts); // You can write this to free char** arrays
-		ft_clean_up(game);
-		free(line);
-		exit(1);
-	}
-	printf("---------------------------------------\n");
-	for (int i=0; parts[i]; i++)
-		printf("%s\n", parts[i]);
-	*destination = ft_strdup(parts[1]);
-	if (!*destination)
-	{
-		ft_putstr_fd("Error\nMalloc failed for texture path\n", 2);
-		if (parts)
-			ft_free_arr((void **)parts);
-		ft_clean_up(game);
-		free(line);
-		exit(1);
-	}
-  	if (is_dir(*destination))
-	{
-		ft_putstr_fd("Error\nTexture path is a directory, not a file\n", 2);
-		if (parts)
-			ft_free_arr((void **)parts);
-		ft_clean_up(game);
-		free(line);
-		exit(1);
-	}
-	ext = ft_strrchr(*destination, '.');
-	if (ext == NULL || ft_strncmp(ext, ".xpm", ft_strlen(ext)) != 0)
-	{
-		ft_putstr_fd("Error\nTexture file must be .xpm format\n", 2);
-		if (parts)
-			ft_free_arr((void **)parts);
-		ft_clean_up(game);
-		free(line);
-		exit(1);
-	}
-	if (is_acessible(*destination) == false)
-	{
-		if (parts)
-			ft_free_arr((void **)parts);
-		ft_clean_up(game);
-		free(line);
-		exit(1);
-	}
+		handle_error("Error\nTexture not found\n", parts, game, line);
+	*destination = extract_texture_path(parts, game, line);
+	validate_texture_format(*destination, parts, game, line);
 	ft_free_arr((void **)parts);
 }

@@ -1,10 +1,10 @@
-NO textures/text/respawn_anchor_side0.xpm
-SO textures/text/respawn_anchor_side0.xpm
-WE textures/text/wet_sponge.xpm
-EA textures/text/wet_sponge.xpm
+NO textures/text/north.xpm
+SO textures/text/south.xpm
+WE textures/text/west.xpm
+EA textures/text/east.xpm
 
-F 			164			,169, 				20
-C   153	 	, 	204, 	255
+F 164,      169,200
+C 153,204,  255
 
 111111111111111111111
 111111111111111111111

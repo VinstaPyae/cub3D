@@ -17,13 +17,35 @@ static char *find_next_newline(char *str)
  * Updates *pos to point to the start of the next line.
  * Returns malloc'd string containing the line (without '\n'), or NULL if end.
  */
+static char *allocate_line(size_t len)
+{
+    char *line = malloc(len + 1);
+    if (!line)
+    {
+        perror("Error\nMalloc failed");
+        exit(1);
+    }
+    return line;
+}
+
+static void copy_line_content(char *line, char *start, size_t len)
+{
+    size_t i = 0;
+    
+    while (i < len)
+    {
+        line[i] = start[i];
+        i++;
+    }
+    line[i] = '\0';
+}
+
 static char *get_next_line(char **pos)
 {
     char    *start;
     char    *end;
     char    *line;
     size_t  len;
-    size_t  i;
 
     if (!pos || !*pos || !**pos)
         return (NULL);
@@ -34,35 +56,16 @@ static char *get_next_line(char **pos)
     /* Calculate length of the line (excluding newline) */
     len = end - start;
     
-    /* Allocate memory for the line */
-    line = malloc(len + 1);
-    if (!line)
-    {
-        perror("Error\nMalloc failed");
-        exit(1);
-    }
-    
-    /* Copy the line content */
-    i = 0;
-    while (i < len)
-    {
-        line[i] = start[i];
-        i++;
-    }
-    line[i] = '\0';
+    /* Allocate and fill the line */
+    line = allocate_line(len);
+    copy_line_content(line, start, len);
     
     /* Update position for next call */
-    if (*end == '\n')
-        *pos = end + 1;  /* Skip the newline */
-    else
-        *pos = end;      /* At end of string */
+    *pos = (*end == '\n') ? end + 1 : end;
     
     return (line);
 }
 
-/*
- * Count the number of lines in the content (including empty lines)
- */
 static size_t count_lines(char *content)
 {
     size_t  count;
@@ -87,32 +90,34 @@ static size_t count_lines(char *content)
     return (count);
 }
 
-/*
- * Read the entire contents of fd into one big string.
- * Returns malloc'd buffer, or exits on error.
- */
+static char *append_buffer_to_content(char *content, char *buffer)
+{
+    char *tmp = ft_strjoin(content, buffer);
+    if (!tmp)
+    {
+        free(content);
+        perror("Error\nMalloc failed");
+        exit(1);
+    }
+    free(content);
+    return tmp;
+}
+
 static char *read_whole_file(int fd)
 {
     char    buffer[1025];
-    char    *content = ft_strdup("");  /* start with empty string */
-    char    *tmp;
+    char    *content = ft_strdup("");
     ssize_t bytes;
 
     if (!content)
         perror("Error\nMalloc failed"), exit(1);
-
+    
     while ((bytes = read(fd, buffer, 1024)) > 0)
     {
         buffer[bytes] = '\0';
-        tmp = ft_strjoin(content, buffer);
-        if (!tmp)
-        {
-            free(content), perror("Error\nMalloc failed");
-            exit(1);
-        }
-        free(content);
-        content = tmp;
+        content = append_buffer_to_content(content, buffer);
     }
+    
     if (bytes < 0)
     {
         free(content);
@@ -122,36 +127,22 @@ static char *read_whole_file(int fd)
     return (content);
 }
 
-/*
- * Reads all lines from fd and returns an array of strings (NULL-terminated).
- * Preserves empty lines, unlike ft_split.
- * Exits on any error.
- */
-char **read_file_lines(int fd)
+static char **allocate_lines_array(size_t line_count)
 {
-    char    *whole;
-    char    **lines;
-    char    *pos;
-    size_t  line_count;
-    size_t  i;
-
-    whole = read_whole_file(fd);
-    
-    /* Count total lines including empty ones */
-    line_count = count_lines(whole);
-    
-    /* Allocate array for line pointers + NULL terminator */
-    lines = malloc(sizeof(char *) * (line_count + 1));
+    char **lines = malloc(sizeof(char *) * (line_count + 1));
     if (!lines)
     {
-        free(whole);
         perror("Error\nMalloc failed");
         exit(1);
     }
+    return lines;
+}
+
+static void extract_lines(char **lines, char *content, size_t line_count)
+{
+    char    *pos = content;
+    size_t  i = 0;
     
-    /* Extract each line using get_next_line */
-    pos = whole;
-    i = 0;
     while (i < line_count)
     {
         lines[i] = get_next_line(&pos);
@@ -160,6 +151,19 @@ char **read_file_lines(int fd)
         i++;
     }
     lines[i] = NULL;  /* NULL terminate the array */
+}
+
+char **read_file_lines(int fd)
+{
+    char    *whole;
+    char    **lines;
+    size_t  line_count;
+
+    whole = read_whole_file(fd);
+    line_count = count_lines(whole);
+    lines = allocate_lines_array(line_count);
+    
+    extract_lines(lines, whole, line_count);
     
     free(whole);
     return (lines);

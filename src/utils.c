@@ -74,7 +74,7 @@ void    ft_clean_config(t_config *cfg)
         free(cfg->texture_we);
         cfg->texture_we = NULL;
     }
-    if (cfg->lines)
+    if (cfg->tex_pix)
     {
         ft_free_arr((void **)cfg->tex_pix);
         cfg->tex_pix = NULL;

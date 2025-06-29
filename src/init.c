@@ -78,45 +78,54 @@ void	init_tex(t_tex *tex)
 	tex->y = 0;
 }
 
-void	init_game(t_game *game)
+static void init_game_keys(t_game *game)
 {
-	game->mlx = NULL;
-	game->win = NULL;
-	game->config = malloc(sizeof(t_config));
-    if (!game->config)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-	init_config(game->config);
-	game->plyr = malloc(sizeof(t_player));
-    if (!game->plyr)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-	init_player(game->plyr);
-	// init_ray(game->ray);
-	game->texture = malloc(sizeof(t_tex));
-    if (!game->texture)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-	game->ray = malloc(sizeof(t_ray));
-    if (!game->ray)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
 	game->key_w = 0;
 	game->key_a = 0;
 	game->key_s = 0;
 	game->key_d = 0;
 	game->key_left = 0;
 	game->key_right = 0;
+}
+
+static void *safe_malloc(size_t size)
+{
+	void *ptr;
+
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		ft_putstr_fd("Error\n", 2);
+		perror("malloc failed for component");
+		exit(EXIT_FAILURE);
+	}
+	return (ptr);
+}
+
+static void init_game_components(t_game *game)
+{
+	game->config = safe_malloc(sizeof(t_config));
+	init_config(game->config);
+	
+	game->plyr = safe_malloc(sizeof(t_player));
+	init_player(game->plyr);
+	
+	game->texture = safe_malloc(sizeof(t_tex));
 	init_tex(game->texture);
+	
+	game->ray = safe_malloc(sizeof(t_ray));
+	init_ray(game->ray);
+}
+
+void init_game(t_game *game)
+{
+	game->mlx = NULL;
+	game->win = NULL;
+	
+	init_game_components(game);
+	init_game_keys(game);
 	init_img_reset(&game->img);
+	
 	game->tex_pixels = NULL;
 	game->tex_c = NULL;
 }

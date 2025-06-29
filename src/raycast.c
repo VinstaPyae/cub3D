@@ -30,7 +30,7 @@ void set_frame_image_pixel(t_game *game, t_img *image, int x, int y)
         set_image_pixel(image, x, y, game->tex_pixels[y][x]);
     else if (y < SCN_HEIGHT / 2)
         set_image_pixel(image, x, y, game->config->ceiling_color);
-    else
+    else if (y < SCN_HEIGHT - 1)
         set_image_pixel(image, x, y, game->config->floor_color);
 }
 
