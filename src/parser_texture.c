@@ -22,7 +22,7 @@ static bool	is_acessible(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error\nFile not accessible");
+		perror("Error\nTexture file not accessible");
 		return (false);
 	}
 	close(fd);
@@ -45,7 +45,7 @@ void	parse_texture(char *line, char **destination, t_game *game)
 	{
 		ft_putstr_fd("Error\nTexture not found\n", 2);
 		if (parts)
-			ft_free_strs((void **)parts); // You can write this to free char** arrays
+			ft_free_arr((void **)parts); // You can write this to free char** arrays
 		ft_clean_up(game);
 		free(line);
 		exit(1);
@@ -58,7 +58,7 @@ void	parse_texture(char *line, char **destination, t_game *game)
 	{
 		ft_putstr_fd("Error\nMalloc failed for texture path\n", 2);
 		if (parts)
-			ft_free_strs((void **)parts);
+			ft_free_arr((void **)parts);
 		ft_clean_up(game);
 		free(line);
 		exit(1);
@@ -67,17 +67,17 @@ void	parse_texture(char *line, char **destination, t_game *game)
 	{
 		ft_putstr_fd("Error\nTexture path is a directory, not a file\n", 2);
 		if (parts)
-			ft_free_strs((void **)parts);
+			ft_free_arr((void **)parts);
 		ft_clean_up(game);
 		free(line);
 		exit(1);
 	}
 	ext = ft_strrchr(*destination, '.');
-	if (ft_strncmp(ext, ".xpm", ft_strlen(ext)) != 0)
+	if (ext == NULL || ft_strncmp(ext, ".xpm", ft_strlen(ext)) != 0)
 	{
 		ft_putstr_fd("Error\nTexture file must be .xpm format\n", 2);
 		if (parts)
-			ft_free_strs((void **)parts);
+			ft_free_arr((void **)parts);
 		ft_clean_up(game);
 		free(line);
 		exit(1);
@@ -85,10 +85,10 @@ void	parse_texture(char *line, char **destination, t_game *game)
 	if (is_acessible(*destination) == false)
 	{
 		if (parts)
-			ft_free_strs((void **)parts);
+			ft_free_arr((void **)parts);
 		ft_clean_up(game);
 		free(line);
 		exit(1);
 	}
-	ft_free_strs((void **)parts);
+	ft_free_arr((void **)parts);
 }

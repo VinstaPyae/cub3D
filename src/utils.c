@@ -11,21 +11,21 @@ int starts_with(const char *str, const char *prefix)
     }
     return (1);
 }
-void	ft_free_strs(void **strs)
+void	ft_free_arr(void **arr)
 {
 	int	i = 0;
 
-	if (!strs)
+	if (!arr)
 		return;
-	while (strs[i])
+	while (arr[i])
     {
-		free(strs[i]);
-        strs[i++] = NULL;
+		free(arr[i]);
+        arr[i++] = NULL;
     }
-    if (strs)
+    if (arr)
     {
-        free(strs);
-        strs = NULL;
+        free(arr);
+        arr = NULL;
     }
 }
 
@@ -51,7 +51,7 @@ void    ft_clean_config(t_config *cfg)
 {
     if (cfg->lines)
     {
-        ft_free_strs((void **)cfg->lines);
+        ft_free_arr((void **)cfg->lines);
         cfg->lines = NULL;
     }
     if (cfg->texture_no)
@@ -76,12 +76,12 @@ void    ft_clean_config(t_config *cfg)
     }
     if (cfg->lines)
     {
-        ft_free_strs((void **)cfg->tex_pix);
+        ft_free_arr((void **)cfg->tex_pix);
         cfg->tex_pix = NULL;
     }
     if (cfg->map)
     {
-        ft_free_strs((void **)cfg->map);
+        ft_free_arr((void **)cfg->map);
         cfg->map = NULL;
     }
     if (cfg)
@@ -123,9 +123,9 @@ void    ft_clean_up(t_game  *game)
     if (game->ray)
         ft_clean_ray(game->ray);
     if (game->tex_c)
-        ft_free_strs((void **)game->tex_c);
+        ft_free_arr((void **)game->tex_c);
     if (game->tex_pixels)
-        ft_free_strs((void **)game->tex_pixels);
+        ft_free_arr((void **)game->tex_pixels);
 }
 
 void    ft_clean_exit(t_game *game, int status)
