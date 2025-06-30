@@ -2,9 +2,10 @@
 
 static int	get_map_width(char **lines, int start)
 {
-	int max = 0;
+	int max;
 	int len;
 
+	max = 0;
 	while (lines[start])
 	{
 		len = ft_strlen(lines[start]);
@@ -17,7 +18,9 @@ static int	get_map_width(char **lines, int start)
 
 static int	get_map_height(char **lines, int start)
 {
-	int count = 0;
+	int count;
+	
+	count = 0;
 	while (lines[start])
 	{
 		count++;
@@ -36,7 +39,9 @@ static void ft_clean_map_error(t_game *game, char *msg)
 
 static char *allocate_map_line(t_game *game, int width)
 {
-	char *line = ft_calloc(width + 1, sizeof(char));
+	char *line;
+	
+	line = ft_calloc(width + 1, sizeof(char));
 	if (!line)
 		ft_clean_map_error(game, "Failed to allocate map line\n");
 	return (line);
@@ -67,7 +72,9 @@ static void copy_and_pad_line(char *dst, char *src, int width)
 
 static char **allocate_map_array(t_game *game, int height)
 {
-	char **map = ft_calloc(height + 1, sizeof(char *));
+	char **map;
+	
+	map = ft_calloc(height + 1, sizeof(char *));
 	if (!map)
 		ft_clean_map_error(game, "Failed to allocate map memory\n");
 	return (map);
@@ -75,10 +82,13 @@ static char **allocate_map_array(t_game *game, int height)
 
 void parse_map(char **lines, int start, t_game *game)
 {
-	int i = 0;
-	int width = get_map_width(lines, start);
-	int height = get_map_height(lines, start);
+	int i;
+	int width;
+	int height;
 	
+	i = 0;
+	width  = get_map_width(lines, start);
+	height = get_map_height(lines, start);
 	game->config->map_width = width;
 	game->config->map_height = height;
 	game->config->map = allocate_map_array(game, height);

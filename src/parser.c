@@ -19,7 +19,9 @@ static char *find_next_newline(char *str)
  */
 static char *allocate_line(size_t len)
 {
-    char *line = malloc(len + 1);
+    char *line;
+    
+    line = malloc(len + 1);
     if (!line)
     {
         perror("Error\nMalloc failed");
@@ -30,8 +32,9 @@ static char *allocate_line(size_t len)
 
 static void copy_line_content(char *line, char *start, size_t len)
 {
-    size_t i = 0;
+    size_t i;
     
+    i = 0;
     while (i < len)
     {
         line[i] = start[i];
@@ -140,9 +143,11 @@ static char **allocate_lines_array(size_t line_count)
 
 static void extract_lines(char **lines, char *content, size_t line_count)
 {
-    char    *pos = content;
-    size_t  i = 0;
+    char    *pos;
+    size_t  i;
     
+    i = 0;
+    pos  = content;
     while (i < line_count)
     {
         lines[i] = get_next_line(&pos);

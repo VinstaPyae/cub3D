@@ -39,27 +39,22 @@ static void	check_enclosure(t_game *game, int y, int x)
 
 void	validate_map(t_game *game)
 {
-	int	y = 0;
+	int	y;
 	int	x;
-	int	player_count = 0;
+	int	player_count;
 
+	y = 0;
+	player_count = 0;
 	while (y < game->config->map_height)
 	{
 		x = 0;
 		while (x < game->config->map_width)
 		{
 			char c = game->config->map[y][x];
-
 			if (!is_valid_char(c))
-			{
-				ft_putstr_fd("Error\nInvalid character in map\n", 2);
-				ft_clean_up(game);
-				exit(1);
-			}
+				ft_clean_exit(game, show_err("Map validation", "Invalid character in map", 1));
 			if (c == '0' || is_player_char(c))
-			{
 				check_enclosure(game, y, x);
-			}
 			if (is_player_char(c))
 				player_count++;
 			x++;
@@ -67,9 +62,5 @@ void	validate_map(t_game *game)
 		y++;
 	}
 	if (player_count != 1)
-	{
-		ft_putstr_fd("Error\nMap must have exactly one player start\n", 2);
-		ft_clean_up(game);
-		exit(1);
-	}
+		ft_clean_exit(game, show_err("Map validation", "Exactly one player character required", 1));
 }
