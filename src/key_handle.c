@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:29:23 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:53:31 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:15:10 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	move_forward(t_game *game)
 
 	new_x = game->plyr->pos_x + game->plyr->dir_x * MOVE_SPEED;
 	new_y = game->plyr->pos_y + game->plyr->dir_y * MOVE_SPEED;
-	if (!is_wall(new_x + game->plyr->dir_x * Wall_Bounce,
+	if (!is_wall(new_x + game->plyr->dir_x * WALL_BOUNCE,
 			game->plyr->pos_y, game))
 		game->plyr->pos_x = new_x;
 	if (!is_wall(game->plyr->pos_x,
-			new_y + game->plyr->dir_y * Wall_Bounce, game))
+			new_y + game->plyr->dir_y * WALL_BOUNCE, game))
 		game->plyr->pos_y = new_y;
 }
 
@@ -34,11 +34,11 @@ void	move_backward(t_game *game)
 
 	new_x = game->plyr->pos_x - game->plyr->dir_x * MOVE_SPEED;
 	new_y = game->plyr->pos_y - game->plyr->dir_y * MOVE_SPEED;
-	if (!is_wall(new_x - game->plyr->dir_x * Wall_Bounce,
+	if (!is_wall(new_x - game->plyr->dir_x * WALL_BOUNCE,
 			game->plyr->pos_y, game))
 		game->plyr->pos_x = new_x;
 	if (!is_wall(game->plyr->pos_x,
-			new_y - game->plyr->dir_y * Wall_Bounce, game))
+			new_y - game->plyr->dir_y * WALL_BOUNCE, game))
 		game->plyr->pos_y = new_y;
 }
 
@@ -49,11 +49,11 @@ void	move_left(t_game *game)
 
 	new_x = game->plyr->pos_x + game->plyr->dir_y * MOVE_SPEED;
 	new_y = game->plyr->pos_y - game->plyr->dir_x * MOVE_SPEED;
-	if (!is_wall(new_x + game->plyr->dir_y * Wall_Bounce,
+	if (!is_wall(new_x + game->plyr->dir_y * WALL_BOUNCE,
 			game->plyr->pos_y, game))
 		game->plyr->pos_x = new_x;
 	if (!is_wall(game->plyr->pos_x,
-			new_y - game->plyr->dir_x * Wall_Bounce, game))
+			new_y - game->plyr->dir_x * WALL_BOUNCE, game))
 		game->plyr->pos_y = new_y;
 }
 
@@ -64,11 +64,11 @@ void	move_right(t_game *game)
 
 	new_x = game->plyr->pos_x - game->plyr->dir_y * MOVE_SPEED;
 	new_y = game->plyr->pos_y + game->plyr->dir_x * MOVE_SPEED;
-	if (!is_wall(new_x - game->plyr->dir_y * Wall_Bounce,
+	if (!is_wall(new_x - game->plyr->dir_y * WALL_BOUNCE,
 			game->plyr->pos_y, game))
 		game->plyr->pos_x = new_x;
 	if (!is_wall(game->plyr->pos_x,
-			new_y + game->plyr->dir_x * Wall_Bounce, game))
+			new_y + game->plyr->dir_x * WALL_BOUNCE, game))
 		game->plyr->pos_y = new_y;
 }
 

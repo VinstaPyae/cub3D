@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:54:04 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:54:05 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:17:31 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	raycast_init_raydata(t_ray *ray, t_player *player, int x)
 	ray->camera_x = 2 * x / (double)SCN_WIDTH - 1;
 	ray->ray_dir_x = player->dir_x + player->plane_x * ray->camera_x;
 	ray->ray_dir_y = player->dir_y + player->plane_y * ray->camera_x;
-	ray->mapX = (int)player->pos_x;
-	ray->mapY = (int)player->pos_y;
+	ray->mapx = (int)player->pos_x;
+	ray->mapy = (int)player->pos_y;
 	ray->deltadist_x = fabs(1 / ray->ray_dir_x);
 	ray->deltadist_y = fabs(1 / ray->ray_dir_y);
 }
@@ -28,22 +28,22 @@ void	raycast_calc_step(t_ray *ray, t_player *player)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->sidedist_x = (player->pos_x - ray->mapX) * ray->deltadist_x;
+		ray->sidedist_x = (player->pos_x - ray->mapx) * ray->deltadist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->sidedist_x = (ray->mapX + 1.0 - player->pos_x) * ray->deltadist_x;
+		ray->sidedist_x = (ray->mapx + 1.0 - player->pos_x) * ray->deltadist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->sidedist_y = (player->pos_y - ray->mapY) * ray->deltadist_y;
+		ray->sidedist_y = (player->pos_y - ray->mapy) * ray->deltadist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->sidedist_y = (ray->mapY + 1.0 - player->pos_y) * ray->deltadist_y;
+		ray->sidedist_y = (ray->mapy + 1.0 - player->pos_y) * ray->deltadist_y;
 	}
 }
 
@@ -55,22 +55,22 @@ void	raycast_dda(t_ray *ray, t_game *game)
 		if (ray->sidedist_x < ray->sidedist_y)
 		{
 			ray->sidedist_x += ray->deltadist_x;
-			ray->mapX += ray->step_x;
+			ray->mapx += ray->step_x;
 			ray->side = 0;
 		}
 		else
 		{
 			ray->sidedist_y += ray->deltadist_y;
-			ray->mapY += ray->step_y;
+			ray->mapy += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->mapX < 0 || ray->mapX >= game->config->map_width
-			|| ray->mapY < 0 || ray->mapY >= game->config->map_height)
+		if (ray->mapx < 0 || ray->mapx >= game->config->map_width
+			|| ray->mapy < 0 || ray->mapy >= game->config->map_height)
 		{
 			ray->hit = 1;
 			break ;
 		}
-		else if (game->config->map[ray->mapY][ray->mapX] == '1')
+		else if (game->config->map[ray->mapy][ray->mapx] == '1')
 			ray->hit = 1;
 	}
 }

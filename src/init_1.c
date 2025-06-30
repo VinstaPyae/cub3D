@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:20:09 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:51:11 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:17:31 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_ray(t_ray *ray)
 	ray->step_x = 0;
 	ray->step_y = 0;
 	ray->side = 0;
-	ray->mapX = 0;
-	ray->mapY = 0;
+	ray->mapx = 0;
+	ray->mapy = 0;
 	ray->hit = 0;
 }
