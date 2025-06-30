@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_color.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 19:50:56 by pzaw              #+#    #+#             */
+/*   Updated: 2025/06/30 19:54:24 by pzaw             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game *game)
+static int	validate_color_value(char *str,
+	char **rgb_parts, char *line, t_game *game)
 {
 	int	i;
-	int val;
+	int	val;
 
 	i = -1;
 	while (str[++i])
@@ -29,7 +42,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 	return (val);
 }
 
-static void check_duplicate_color(int *color_out, char *line, t_game *game)
+static void	check_duplicate_color(int *color_out, char *line, t_game *game)
 {
 	if (*color_out != -1)
 	{
@@ -40,25 +53,25 @@ static void check_duplicate_color(int *color_out, char *line, t_game *game)
 	}
 }
 
-static char **prepare_rgb_parts(char *line)
+static char	**prepare_rgb_parts(char *line)
 {
 	char	*parts;
 	char	**rgb_parts;
 	int		i;
+	char	*trimmed;
 
 	i = 0;
 	while (line[i] == 'F' || line[i] == 'C')
 		i++;
 	if (i > 1)
-		return (NULL); // Invalid format, should be "F" or "C" followed by RGB values
+		return (NULL);
 	parts = ft_strtrim(line, "FC \t");
 	rgb_parts = ft_split(parts, ',');
 	free(parts);
-	
 	i = 0;
 	while (rgb_parts && rgb_parts[i])
 	{
-		char *trimmed = ft_strtrim(rgb_parts[i], " \t");
+		trimmed = ft_strtrim(rgb_parts[i], " \t");
 		free(rgb_parts[i]);
 		rgb_parts[i] = trimmed;
 		i++;
@@ -66,9 +79,10 @@ static char **prepare_rgb_parts(char *line)
 	return (rgb_parts);
 }
 
-static void validate_rgb_format(char **rgb_parts, char *line, t_game *game)
+static void	validate_rgb_format(char **rgb_parts, char *line, t_game *game)
 {
-	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1] || !rgb_parts[2] || rgb_parts[3])
+	if (!rgb_parts || !rgb_parts[0] || !rgb_parts[1]
+		|| !rgb_parts[2] || rgb_parts[3])
 	{
 		free(line);
 		ft_putstr_fd("Error\nInvalid color format\n", 2);
@@ -81,16 +95,16 @@ static void validate_rgb_format(char **rgb_parts, char *line, t_game *game)
 void	parse_color(char *line, int *color_out, t_game *game)
 {
 	char	**rgb_parts;
-	int		r, g, b;
+	int		r;
+	int		g;
+	int		b;
 
 	check_duplicate_color(color_out, line, game);
 	rgb_parts = prepare_rgb_parts(line);
 	validate_rgb_format(rgb_parts, line, game);
-
 	r = validate_color_value(rgb_parts[0], rgb_parts, line, game);
 	g = validate_color_value(rgb_parts[1], rgb_parts, line, game);
 	b = validate_color_value(rgb_parts[2], rgb_parts, line, game);
-
 	ft_free_arr((void **)rgb_parts);
 	*color_out = (r << 16) | (g << 8) | b;
 }

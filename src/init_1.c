@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 19:20:09 by pzaw              #+#    #+#             */
+/*   Updated: 2025/06/30 19:21:55 by pzaw             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	init_img_reset(t_img *img)
@@ -25,22 +37,22 @@ void	init_config(t_config *config)
 	config->map_start_indx = -1;
 }
 
-void init_player(t_player *player)
+void	init_player(t_player *player)
 {
 	player->dir = '\0';
-    player->pos_x = 0;
-    player->pos_y = 0;
-    player->dir_x = 0;
-    player->dir_y = 0;
-    player->plane_x = 0;
-    player->plane_y = 0;
+	player->pos_x = 0;
+	player->pos_y = 0;
+	player->dir_x = 0;
+	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0;
 	player->p_moved = 0;
 	player->move_x = 0;
 	player->plane_y = 0;
 	player->rotate = 0;
 }
 
-void init_ray(t_ray *ray)
+void	init_ray(t_ray *ray)
 {
 	ray->camera_x = 0;
 	ray->ray_dir_x = 0;

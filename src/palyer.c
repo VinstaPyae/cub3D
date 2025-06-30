@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   palyer.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 19:44:43 by pzaw              #+#    #+#             */
+/*   Updated: 2025/06/30 19:45:39 by pzaw             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-void get_plyr_pos(t_game *game)
+void	get_plyr_pos(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (game->config->map[y])
@@ -15,16 +27,14 @@ void get_plyr_pos(t_game *game)
 			{
 				game->plyr->pos_x = (double)x + 0.5;
 				game->plyr->pos_y = (double)y + 0.5;
-				// printf("found\n");
 			}
 			x++;
 		}
 		y++;
 	}
-	// printf("x: %f\n", game->plyr->pos_x);
-	// printf("y: %f\n", game->plyr->pos_y);
 }
-static void set_dir_north_south(t_game *game, char tile)
+
+static void	set_dir_north_south(t_game *game, char tile)
 {
 	if (tile == 'N')
 	{
@@ -42,7 +52,7 @@ static void set_dir_north_south(t_game *game, char tile)
 	}
 }
 
-static void set_dir_east_west(t_game *game, char tile)
+static void	set_dir_east_west(t_game *game, char tile)
 {
 	if (tile == 'E')
 	{
@@ -60,11 +70,11 @@ static void set_dir_east_west(t_game *game, char tile)
 	}
 }
 
-void get_plyr_dir(t_game *game)
+void	get_plyr_dir(t_game *game)
 {
-	int x;
-	int y;
-	char tile;
+	int		x;
+	int		y;
+	char	tile;
 
 	x = 0;
 	y = 0;

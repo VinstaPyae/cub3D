@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_mlx.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 19:22:51 by pzaw              #+#    #+#             */
+/*   Updated: 2025/06/30 19:22:52 by pzaw             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	init_img(t_game *game, t_img *image, int width, int height)
@@ -23,13 +35,13 @@ void	init_texture_img(t_game *game, t_img *image, char *path)
 	return ;
 }
 
-void    init_mlx(t_game *game)
+void	init_mlx(t_game *game)
 {
-    game->mlx = mlx_init();
-    if (!game->mlx)
-        ft_clean_exit(game, show_err("mlx", "Could not start mlx", 1));
-    game->win = mlx_new_window(game->mlx, SCN_WIDTH, SCN_HEIGHT, "Cub3D");
-    if (!game->win)
-        ft_clean_exit(game, show_err("mlx", "Could not create mlx window", 1));
-    return ;
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		ft_clean_exit(game, show_err("mlx", "Could not start mlx", 1));
+	game->win = mlx_new_window(game->mlx, SCN_WIDTH, SCN_HEIGHT, "Cub3D");
+	if (!game->win)
+		ft_clean_exit(game, show_err("mlx", "Could not create mlx window", 1));
+	return ;
 }
