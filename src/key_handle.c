@@ -98,57 +98,77 @@ void rotate_l_or_r(t_player *player, double angle)
     player->plane_x = player->plane_x * cos(angle) - player->plane_y * sin(angle);
     player->plane_y = old_plane_x * sin(angle) + player->plane_y * cos(angle);
 }
-
-void handle_movement(t_game *game)
+void move_forward(t_game *game)
 {
-    double move_step = MOVE_SPEED;
-    double rot_step = ROT_SPEED;
     double new_x;
     double new_y;
 
-    // Forward/backward movement
+    new_x = game->plyr->pos_x + game->plyr->dir_x * MOVE_SPEED;
+    new_y = game->plyr->pos_y + game->plyr->dir_y * MOVE_SPEED;
+    if (!isWall(new_x + game->plyr->dir_x * Wall_Bounce,
+                game->plyr->pos_y, game))
+        game->plyr->pos_x = new_x;
+    if (!isWall(game->plyr->pos_x,
+                new_y + game->plyr->dir_y * Wall_Bounce, game))
+        game->plyr->pos_y = new_y;
+}
+
+void move_backward(t_game *game)
+{
+    double new_x;
+    double new_y;
+
+    new_x = game->plyr->pos_x - game->plyr->dir_x * MOVE_SPEED;
+    new_y = game->plyr->pos_y - game->plyr->dir_y * MOVE_SPEED;
+    if (!isWall(new_x - game->plyr->dir_x * Wall_Bounce,
+                game->plyr->pos_y, game))
+        game->plyr->pos_x = new_x;
+    if (!isWall(game->plyr->pos_x,
+                new_y - game->plyr->dir_y * Wall_Bounce, game))
+        game->plyr->pos_y = new_y;
+}
+
+void move_left(t_game *game)
+{
+    double new_x;
+    double new_y;
+
+    new_x = game->plyr->pos_x + game->plyr->dir_y * MOVE_SPEED;
+    new_y = game->plyr->pos_y - game->plyr->dir_x * MOVE_SPEED;
+    if (!isWall(new_x + game->plyr->dir_y * Wall_Bounce,
+                game->plyr->pos_y, game))
+        game->plyr->pos_x = new_x;
+    if (!isWall(game->plyr->pos_x,
+                new_y - game->plyr->dir_x * Wall_Bounce, game))
+        game->plyr->pos_y = new_y;
+}
+
+void move_right(t_game *game)
+{
+    double new_x;
+    double new_y;
+
+    new_x = game->plyr->pos_x - game->plyr->dir_y * MOVE_SPEED;
+    new_y = game->plyr->pos_y + game->plyr->dir_x * MOVE_SPEED;
+    if (!isWall(new_x - game->plyr->dir_y * Wall_Bounce,
+                game->plyr->pos_y, game))
+        game->plyr->pos_x = new_x;
+    if (!isWall(game->plyr->pos_x,
+                new_y + game->plyr->dir_x * Wall_Bounce, game))
+        game->plyr->pos_y = new_y;
+}
+void handle_movement(t_game *game)
+{
     if (game->key_w)
-    {
-        new_x = game->plyr->pos_x + game->plyr->dir_x * move_step;
-        new_y = game->plyr->pos_y + game->plyr->dir_y * move_step;
-        if (!isWall(new_x + game->plyr->dir_x * Wall_Bounce, game->plyr->pos_y, game))
-            game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y + game->plyr->dir_y * Wall_Bounce, game))
-            game->plyr->pos_y = new_y;
-    }
+        move_forward(game);
     if (game->key_s)
-    {
-        new_x = game->plyr->pos_x - game->plyr->dir_x * move_step;
-        new_y = game->plyr->pos_y - game->plyr->dir_y * move_step;
-        if (!isWall(new_x - game->plyr->dir_x * Wall_Bounce, game->plyr->pos_y, game))
-            game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y - game->plyr->dir_y * Wall_Bounce, game))
-            game->plyr->pos_y = new_y;
-    }
-
-    // Strafing (left/right movement)
+        move_backward(game);
     if (game->key_a)
-    {
-        new_x = game->plyr->pos_x + game->plyr->dir_y * move_step;
-        new_y = game->plyr->pos_y - game->plyr->dir_x * move_step;
-        if (!isWall(new_x + game->plyr->dir_y * Wall_Bounce, game->plyr->pos_y, game))
-            game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y - game->plyr->dir_x * Wall_Bounce, game))
-            game->plyr->pos_y = new_y;
-    }
+        move_left(game);
     if (game->key_d)
-    {
-        new_x = game->plyr->pos_x - game->plyr->dir_y * move_step;
-        new_y = game->plyr->pos_y + game->plyr->dir_x * move_step;
-        if (!isWall(new_x - game->plyr->dir_y * Wall_Bounce, game->plyr->pos_y, game))
-            game->plyr->pos_x = new_x;
-        if (!isWall(game->plyr->pos_x, new_y + game->plyr->dir_x * Wall_Bounce, game))
-            game->plyr->pos_y = new_y;
-    }
-
-    // Rotation
+        move_right(game);
     if (game->key_left)
-        rotate_l_or_r(game->plyr, -rot_step);
+        rotate_l_or_r(game->plyr, -ROT_SPEED);
     if (game->key_right)
-        rotate_l_or_r(game->plyr, rot_step);
+        rotate_l_or_r(game->plyr, ROT_SPEED);
 }

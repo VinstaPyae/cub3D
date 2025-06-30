@@ -1,9 +1,9 @@
 #include "cub3D.h"
 
-void	get_plyr_pos(t_game *game)
+void get_plyr_pos(t_game *game)
 {
-	int		x;
-	int		y;
+	int x;
+	int y;
 
 	y = 0;
 	while (game->config->map[y])
@@ -24,42 +24,54 @@ void	get_plyr_pos(t_game *game)
 	// printf("x: %f\n", game->plyr->pos_x);
 	// printf("y: %f\n", game->plyr->pos_y);
 }
-
-void	get_plyr_dir(t_game *game)
+static void set_dir_north_south(t_game *game, char tile)
 {
-	int	x;
-	int	y;
-
-	x = (int)game->plyr->pos_x;
-	y = (int)game->plyr->pos_y;
-	if (game->config->map[y][x] == 'N')
+	if (tile == 'N')
 	{
 		game->plyr->dir_x = 0;
 		game->plyr->dir_y = -1;
 		game->plyr->plane_x = 0.66;
 		game->plyr->plane_y = 0;
 	}
-	if (game->config->map[y][x] == 'S')
+	if (tile == 'S')
 	{
 		game->plyr->dir_x = 0;
 		game->plyr->dir_y = 1;
 		game->plyr->plane_x = -0.66;
 		game->plyr->plane_y = 0;
 	}
-	if (game->config->map[y][x] == 'E')
+}
+
+static void set_dir_east_west(t_game *game, char tile)
+{
+	if (tile == 'E')
 	{
 		game->plyr->dir_x = 1;
 		game->plyr->dir_y = 0;
 		game->plyr->plane_x = 0;
 		game->plyr->plane_y = 0.66;
 	}
-	if (game->config->map[y][x] == 'W')
+	if (tile == 'W')
 	{
 		game->plyr->dir_x = -1;
 		game->plyr->dir_y = 0;
 		game->plyr->plane_x = 0;
 		game->plyr->plane_y = -0.66;
 	}
-	// printf("dirX: %f\n", game->plyr->dir_x);
-	// printf("dirY: %f\n", game->plyr->dir_y);
+}
+
+void get_plyr_dir(t_game *game)
+{
+	int x;
+	int y;
+	char tile;
+
+	x = 0;
+	y = 0;
+	tile = 0;
+	x = (int)game->plyr->pos_x;
+	y = (int)game->plyr->pos_y;
+	tile = game->config->map[y][x];
+	set_dir_north_south(game, tile);
+	set_dir_east_west(game, tile);
 }
