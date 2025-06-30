@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:01:14 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:06:44 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 20:50:16 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static char	*read_whole_file(int fd)
 		perror("Error\nMalloc failed");
 		exit(1);
 	}
-	bytes = read(fd, buffer, 1024);
-	while (bytes > 0)
+	while ((bytes = read(fd, buffer, 1024)) > 0)
 	{
 		buffer[bytes] = '\0';
 		content = append_buffer_to_content(content, buffer);

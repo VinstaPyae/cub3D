@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:20:09 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:21:55 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 20:51:11 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_player(t_player *player)
 	player->plane_y = 0;
 	player->p_moved = 0;
 	player->move_x = 0;
-	player->plane_y = 0;
+	player->move_y = 0;
 	player->rotate = 0;
 }
 
@@ -65,6 +65,7 @@ void	init_ray(t_ray *ray)
 	ray->wall_x = 0;
 	ray->wall_top = 0;
 	ray->wall_btm = 0;
+	ray->wall_height = 0;
 	ray->step_x = 0;
 	ray->step_y = 0;
 	ray->side = 0;

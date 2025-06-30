@@ -1,6 +1,5 @@
 #include "cub3D.h"
 
-
 int	check_file_extension(char *filename)
 {
 	char	*dot;
@@ -12,6 +11,7 @@ int	check_file_extension(char *filename)
 		return (0);
 	return (ft_strncmp(dot, ".cub", 5) == 0);
 }
+
 int	validate_args(int ac, char **av)
 {
 	if (ac != 2)

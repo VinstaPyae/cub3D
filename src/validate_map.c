@@ -21,14 +21,15 @@ static void	check_enclosure(t_game *game, int y, int x)
 	int	dy[4] = {-1, 1, 0, 0};
 	int	dx[4] = {0, 0, -1, 1};
 	int	i;
-	int ny, nx;
-
+	int	ny;
+	int	nx;
 	i = 0;
 	while (i < 4)
 	{
 		ny = y + dy[i];
 		nx = x + dx[i];
-		if (!is_in_bounds(ny, nx, game->config) || game->config->map[ny][nx] == ' ')
+		if (!is_in_bounds(ny, nx, game->config)
+			|| game->config->map[ny][nx] == ' ')
 		{
 			ft_putstr_fd("Error\nMap is not enclosed by walls\n", 2);
 			ft_clean_exit(game, 1);
@@ -37,11 +38,21 @@ static void	check_enclosure(t_game *game, int y, int x)
 	}
 }
 
+void ft_validater(char c, int x, int y, t_game *game)
+{
+	if (!is_valid_char(c))
+		ft_clean_exit(game, show_err("Map validation",
+				"Invalid character in map", 1));
+	if (c == '0' || is_player_char(c))
+		check_enclosure(game, y, x);
+}
+
 void	validate_map(t_game *game)
 {
-	int	y;
-	int	x;
-	int	player_count;
+	char	c;
+	int		y;
+	int		x;
+	int		player_count;
 
 	y = 0;
 	player_count = 0;
@@ -50,11 +61,8 @@ void	validate_map(t_game *game)
 		x = 0;
 		while (x < game->config->map_width)
 		{
-			char c = game->config->map[y][x];
-			if (!is_valid_char(c))
-				ft_clean_exit(game, show_err("Map validation", "Invalid character in map", 1));
-			if (c == '0' || is_player_char(c))
-				check_enclosure(game, y, x);
+			c = game->config->map[y][x];
+			ft_validater(c, x, y, game);
 			if (is_player_char(c))
 				player_count++;
 			x++;
@@ -62,5 +70,6 @@ void	validate_map(t_game *game)
 		y++;
 	}
 	if (player_count != 1)
-		ft_clean_exit(game, show_err("Map validation", "Exactly one player character required", 1));
+		ft_clean_exit(game, show_err("Map validation",
+				"Exactly one player character required", 1));
 }

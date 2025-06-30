@@ -8,7 +8,7 @@ static void	parse_config(t_game *game)
 	while (game->config->lines[i])
 	{
 		if (!parse_config_line(game->config->lines[i], game, i))
-			break;
+			break ;
 		i++;
 	}
 }

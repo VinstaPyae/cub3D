@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:55:43 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:57:02 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 20:22:29 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,4 @@ void	parse_map(char **lines, int start, t_game *game)
 		start++;
 	}
 	game->config->map[i] = NULL;
+}
