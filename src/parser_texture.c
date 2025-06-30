@@ -37,7 +37,7 @@ static void validate_texture_format(char *path, char **parts, t_game *game, char
 		handle_error("Error\nTexture path is a directory, not a file\n", 
 			parts, game, line);
 	ext = ft_strrchr(path, '.');
-	if (ext == NULL || ft_strncmp(ext, ".xpm", ft_strlen(ext)) != 0)
+	if (ext == NULL || ft_strncmp(ext, ".xpm", 4) != 0)
 		handle_error("Error\nTexture file must be .xpm format\n", 
 			parts, game, line);
 	if (is_acessible(path) == false)
