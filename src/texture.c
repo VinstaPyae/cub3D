@@ -54,14 +54,14 @@ void	init_texture_pixels(t_game *game)
 	game->tex_pixels = ft_calloc(SCN_HEIGHT + 1,
 			sizeof * game->tex_pixels);
 	if (!game->tex_pixels)
-		ft_clean_exit(game, show_err(NULL, ERR_MALLOC, 1));
+		ft_clean_exit(game, show_err(NULL, "Could not allocate memory", 1));
 	i = 0;
 	while (i < SCN_HEIGHT)
 	{
 		game->tex_pixels[i] = ft_calloc(SCN_WIDTH + 1,
 				sizeof * game->tex_pixels[0]);
 		if (!game->tex_pixels[i])
-			ft_clean_exit(game, show_err(NULL, ERR_MALLOC, 1));
+			ft_clean_exit(game, show_err(NULL, "Could not allocate memory", 1));
 		i++;
 	}
 }

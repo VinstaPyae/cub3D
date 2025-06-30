@@ -11,7 +11,7 @@ static int	*xpm_to_img(t_game *game, char *path)
 	buffer = ft_calloc(1,
 			sizeof * buffer * game->texture->size * game->texture->size);
 	if (!buffer)
-		ft_clean_exit(game, show_err(NULL, ERR_MALLOC, 1));
+		ft_clean_exit(game, show_err(NULL, "Could not allocate memory", 1));
 	y = 0;
 	while (y < game->texture->size)
 	{
@@ -32,7 +32,7 @@ void	init_textures(t_game *game)
 {
 	game->tex_c = ft_calloc(5, sizeof * game->texture);
 	if (!game->tex_c)
-		ft_clean_exit(game, show_err(NULL, ERR_MALLOC, 1));
+		ft_clean_exit(game, show_err(NULL, "Could not allocate memory", 1));
 	game->tex_c[NORTH] = xpm_to_img(game, game->config->texture_no);
 	game->tex_c[SOUTH] = xpm_to_img(game, game->config->texture_so);
 	game->tex_c[EAST] = xpm_to_img(game, game->config->texture_ea);
