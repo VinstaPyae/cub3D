@@ -19,19 +19,14 @@ int render_loop(t_game *game)
 /* Window close handler (red X button) */
 int close_window(t_game *game)
 {
-    mlx_destroy_window(game->mlx, game->win);
-    ft_clean_up(game);
-    exit(0);
-    return (0);
+    return (ft_clean_exit(game, 0), 0);
 }
 
 int key_press(int key, t_game *game)
 {
     if (key == KEY_ESC)
     {
-        mlx_destroy_window(game->mlx, game->win);
-        ft_clean_up(game);
-        exit(0);
+        return (close_window(game));
     }
     if (key == KEY_W)
         game->key_w = 1;

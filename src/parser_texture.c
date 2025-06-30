@@ -29,15 +29,6 @@ static bool	is_acessible(char *path)
 	return (true);
 }
 
-static void handle_error(char *msg, char **parts, t_game *game, char *line)
-{
-	ft_putstr_fd(msg, 2);
-	if (parts)
-		ft_free_arr((void **)parts);
-	free(line);
-	ft_clean_exit(game, 1);
-}
-
 static void validate_texture_format(char *path, char **parts, t_game *game, char *line)
 {
 	char *ext;

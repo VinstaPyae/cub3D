@@ -3,6 +3,7 @@
 static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game *game)
 {
 	int	i;
+	int val;
 
 	i = -1;
 	while (str[++i])
@@ -16,8 +17,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 			exit(1);
 		}
 	}
-	int	val = ft_atoi(str);
-
+	val = ft_atoi(str);
 	if (val < 0 || val > 255)
 	{
 		ft_putstr_fd("Error\nColor values must be between 0 and 255\n", 2);
@@ -28,6 +28,7 @@ static int	 validate_color_value(char *str, char **rgb_parts, char *line, t_game
 	}
 	return (val);
 }
+
 static void check_duplicate_color(int *color_out, char *line, t_game *game)
 {
 	if (*color_out != -1)
@@ -51,7 +52,6 @@ static char **prepare_rgb_parts(char *line)
 	if (i > 1)
 		return (NULL); // Invalid format, should be "F" or "C" followed by RGB values
 	parts = ft_strtrim(line, "FC \t");
-	printf("Parts: %s\n", parts);
 	rgb_parts = ft_split(parts, ',');
 	free(parts);
 	

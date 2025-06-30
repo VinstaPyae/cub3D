@@ -37,7 +37,6 @@ int	main(int ac, char *av[])
 			i++;
 			continue;
 		}
-		printf("trimmed str: %s\n", trimmed);
 		if (starts_with(trimmed, "NO"))
 			parse_texture(trimmed, &game.config->texture_no, &game);
 		else if (starts_with(trimmed, "SO"))
@@ -53,7 +52,6 @@ int	main(int ac, char *av[])
 		else
 		{
 			game.config->map_start_indx = i;  // mark the start of map
-			printf("break\n");
 			free(trimmed);
 			break;
 		}
@@ -74,19 +72,15 @@ int	main(int ac, char *av[])
 	}
 	parse_map(game.config->lines, game.config->map_start_indx, &game);
 	validate_map(&game);
-	for (i=0; game.config->map[i]; i++)
-		printf("%s\n", game.config->map[i]);
 	init_mlx(&game);
 	init_textures(&game);
 	get_plyr_pos(&game);
 	get_plyr_dir(&game);
 	raycast(&game);
 	render_frame(&game);
-	printf("Raycast called, SCN_WIDTH: %d, SCN_HEIGHT: %d\n", SCN_WIDTH, SCN_HEIGHT);
 	setup_hooks(&game);
 	mlx_loop_hook(game.mlx, render_loop, &game);
 	mlx_loop(game.mlx);
 	ft_clean_up(&game);
-	printf("finish game!\n");
 	return (0);
 }

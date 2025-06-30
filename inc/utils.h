@@ -13,5 +13,6 @@ void	ft_free_arr(void **strs);
 void    ft_clean_up(t_game *game);
 void    ft_clean_exit(t_game *game, int status);
 int     show_err(char *detail, char *str, int code);
+void handle_error(char *msg, char **parts, t_game *game, char *line);
 
 #endif

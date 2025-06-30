@@ -29,6 +29,15 @@ void	ft_free_arr(void **arr)
     }
 }
 
+void handle_error(char *msg, char **parts, t_game *game, char *line)
+{
+	ft_putstr_fd(msg, 2);
+	if (parts)
+		ft_free_arr((void **)parts);
+	free(line);
+	ft_clean_exit(game, 1);
+}
+
 void    ft_clean_plyr(t_player *plyr)
 {
     if (plyr)
