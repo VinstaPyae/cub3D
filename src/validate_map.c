@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/30 20:54:30 by pzaw              #+#    #+#             */
+/*   Updated: 2025/06/30 21:03:46 by pzaw             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 int	is_player_char(char c)
@@ -10,19 +22,15 @@ int	is_valid_char(char c)
 	return (c == '0' || c == '1' || is_player_char(c) || c == ' ');
 }
 
-int	is_in_bounds(int y, int x, t_config *cfg)
-{
-	return (y >= 0 && x >= 0 && y < cfg->map_height && x < cfg->map_width);
-}
-
-// Check 8 surrounding cells
 static void	check_enclosure(t_game *game, int y, int x)
 {
-	int	dy[4] = {-1, 1, 0, 0};
-	int	dx[4] = {0, 0, -1, 1};
+	int	dy[4];
+	int	dx[4];
 	int	i;
 	int	ny;
 	int	nx;
+
+	init_direction_arrays(dy, dx);
 	i = 0;
 	while (i < 4)
 	{
@@ -38,7 +46,7 @@ static void	check_enclosure(t_game *game, int y, int x)
 	}
 }
 
-void ft_validater(char c, int x, int y, t_game *game)
+void	ft_validater(char c, int x, int y, t_game *game)
 {
 	if (!is_valid_char(c))
 		ft_clean_exit(game, show_err("Map validation",

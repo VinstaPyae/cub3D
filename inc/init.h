@@ -12,6 +12,7 @@ void	init_config(t_config *config);
 void	init_player(t_player *player);
 void	init_ray(t_ray *ray);
 void	init_game(t_game *game);
+void init_direction_arrays(int dy[4], int dx[4]);
 
 void    init_mlx(t_game *game);
 void	init_texture_img(t_game *game, t_img *image, char *path);

@@ -18,4 +18,5 @@ void ft_clean_config_arr(t_config *cfg);
 void ft_clean_config_tex(t_config *cfg);
 void    ft_clean_ray(t_ray *ray);
 void    ft_clean_plyr(t_player *plyr);
+int	is_in_bounds(int y, int x, t_config *cfg);
 #endif

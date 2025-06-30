@@ -6,7 +6,7 @@
 /*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:23:09 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:23:09 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/06/30 21:02:40 by pzaw             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ void	init_textures(t_game *game)
 	game->tex_c[SOUTH] = xpm_to_img(game, game->config->texture_so);
 	game->tex_c[EAST] = xpm_to_img(game, game->config->texture_ea);
 	game->tex_c[WEST] = xpm_to_img(game, game->config->texture_we);
+}
+
+void	init_direction_arrays(int dy[4], int dx[4])
+{
+	dy[0] = -1;
+	dy[1] = 1;
+	dy[2] = 0;
+	dy[3] = 0;
+	dx[0] = 0;
+	dx[1] = 0;
+	dx[2] = -1;
+	dx[3] = 1;
 }
