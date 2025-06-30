@@ -162,5 +162,9 @@ int key_release(int key, t_game *game);
 void handle_movement(t_game *game);
 void rotate_l_or_r(t_player *player, double angle);
 
+int	parse_config_line(char *line, t_game *game, int line_index);
+int	read_config_file(char *filename, t_game *game);
+int	validate_args(int ac, char **av);
+
 int render_loop(t_game *game);
 #endif

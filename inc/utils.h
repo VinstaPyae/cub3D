@@ -14,5 +14,8 @@ void    ft_clean_up(t_game *game);
 void    ft_clean_exit(t_game *game, int status);
 int     show_err(char *detail, char *str, int code);
 void handle_error(char *msg, char **parts, t_game *game, char *line);
-
+void ft_clean_config_arr(t_config *cfg);
+void ft_clean_config_tex(t_config *cfg);
+void    ft_clean_ray(t_ray *ray);
+void    ft_clean_plyr(t_player *plyr);
 #endif
