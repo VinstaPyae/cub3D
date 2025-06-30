@@ -58,7 +58,6 @@ static void copy_and_pad_line(char *dst, char *src, int width)
 	while (src[j])
 	{
 		dst[j] = src[j];
-		printf("%c", src[j]);
 		j++;
 	}
 	while (j < width)  // pad with spaces

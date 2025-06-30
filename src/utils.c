@@ -155,7 +155,7 @@ void    ft_clean_exit(t_game *game, int status)
 
 int	show_err(char *detail, char *str, int code)
 {
-	ft_putstr_fd("cub3D: Error", 2);
+	ft_putstr_fd("Error\n", 2);
 	if (detail)
 	{
 		ft_putstr_fd(": ", 2);
