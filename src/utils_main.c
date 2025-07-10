@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:54:25 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:54:26 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/10 22:28:42 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	read_config_file(char *filename, t_game *game)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (perror("Error\nFailed to open file"), 0);
-	game->config->lines = read_file_lines(fd);
+	game->config->lines = read_file_lines(fd, game);
 	close(fd);
 	return (1);
 }

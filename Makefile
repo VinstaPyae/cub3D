@@ -20,8 +20,30 @@ LDLIBS    := $(LIBFT_LIB) $(MLX_LIB) -lX11 -lXext -lm
 
 # Source files
 MAIN_SRC := cub3D.c
-SRCS     := $(MAIN_SRC) $(wildcard $(SRCDIR)/*.c)
-OBJS     := $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCS)))
+SRC_FILES := init.c \
+			init_1.c \
+			init_mlx.c \
+			init_textures.c \
+			key_handle.c \
+			key_handle_1.c \
+			palyer.c \
+			parser.c \
+			parser_1.c \
+			parser_color.c \
+			parser_map.c \
+			parser_map_1.c \
+			parser_texture.c \
+			raycast.c \
+			raycast_1.c \
+			texture.c \
+			utils.c \
+			utils_1.c \
+			utils_2.c \
+			utils_main.c \
+			validate_map.c
+
+SRCS := $(MAIN_SRC) $(addprefix $(SRCDIR)/, $(SRC_FILES))
+OBJS := $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCS)))
 
 # Target
 TARGET   := cub3D

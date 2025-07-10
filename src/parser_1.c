@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:46:08 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:49:15 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/10 22:30:43 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*find_next_newline(char *str)
 	return (str);
 }
 
-char	*allocate_line(size_t len)
+char	*allocate_line(size_t len, t_game *game)
 {
 	char	*line;
 
@@ -29,7 +29,7 @@ char	*allocate_line(size_t len)
 	if (!line)
 	{
 		perror("Error\nMalloc failed");
-		exit(1);
+		ft_clean_exit(game, 1);
 	}
 	return (line);
 }
@@ -47,7 +47,7 @@ void	copy_line_content(char *line, char *start, size_t len)
 	line[i] = '\0';
 }
 
-char	*get_next_line(char **pos)
+char	*get_next_line(char **pos, t_game *game)
 {
 	char	*start;
 	char	*end;
@@ -59,7 +59,7 @@ char	*get_next_line(char **pos)
 	start = *pos;
 	end = find_next_newline(start);
 	len = end - start;
-	line = allocate_line(len);
+	line = allocate_line(len, game);
 	copy_line_content(line, start, len);
 	if (*end == '\n')
 		*pos = end + 1;

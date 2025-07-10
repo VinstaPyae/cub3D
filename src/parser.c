@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:01:14 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:55:46 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/10 22:30:13 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*append_buffer_to_content(char *content, char *buffer)
 	return (tmp);
 }
 
-static char	*read_whole_file(int fd)
+static char	*read_whole_file(int fd, t_game *game)
 {
 	char	buffer[1025];
 	char	*content;
@@ -37,7 +37,7 @@ static char	*read_whole_file(int fd)
 	if (!content)
 	{
 		perror("Error\nMalloc failed");
-		exit(1);
+		ft_clean_exit(game, 1);
 	}
 	bytes = read(fd, buffer, 1024);
 	while (bytes > 0)
@@ -50,12 +50,12 @@ static char	*read_whole_file(int fd)
 	{
 		free(content);
 		perror("Error\nFailed to read file");
-		exit(1);
+		ft_clean_exit(game, 1);
 	}
 	return (content);
 }
 
-static char	**allocate_lines_array(size_t line_count)
+static char	**allocate_lines_array(size_t line_count, t_game *game)
 {
 	char	**lines;
 
@@ -63,12 +63,12 @@ static char	**allocate_lines_array(size_t line_count)
 	if (!lines)
 	{
 		perror("Error\nMalloc failed");
-		exit(1);
+		ft_clean_exit(game, 1);
 	}
 	return (lines);
 }
 
-static void	extract_lines(char **lines, char *content, size_t line_count)
+static void	extract_lines(char **lines, char *content, size_t line_count, t_game *game)
 {
 	char	*pos;
 	size_t	i;
@@ -77,7 +77,7 @@ static void	extract_lines(char **lines, char *content, size_t line_count)
 	pos = content;
 	while (i < line_count)
 	{
-		lines[i] = get_next_line(&pos);
+		lines[i] = get_next_line(&pos, game);
 		if (!lines[i])
 			break ;
 		i++;
@@ -85,16 +85,16 @@ static void	extract_lines(char **lines, char *content, size_t line_count)
 	lines[i] = NULL;
 }
 
-char	**read_file_lines(int fd)
+char	**read_file_lines(int fd, t_game *game)
 {
 	char	*whole;
 	char	**lines;
 	size_t	line_count;
 
-	whole = read_whole_file(fd);
+	whole = read_whole_file(fd, game);
 	line_count = count_lines(whole);
-	lines = allocate_lines_array(line_count);
-	extract_lines(lines, whole, line_count);
+	lines = allocate_lines_array(line_count, game);
+	extract_lines(lines, whole, line_count, game);
 	free(whole);
 	return (lines);
 }

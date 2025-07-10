@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:25:33 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:25:35 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/10 22:18:00 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	init_game_keys(t_game *game)
 	game->key_right = 0;
 }
 
-static void	*safe_malloc(size_t size)
+static void	*safe_malloc(size_t size, t_game *game)
 {
 	void	*ptr;
 
@@ -48,20 +48,20 @@ static void	*safe_malloc(size_t size)
 	{
 		ft_putstr_fd("Error\n", 2);
 		perror("malloc failed for component");
-		exit(EXIT_FAILURE);
+		ft_clean_exit(game, 1);
 	}
 	return (ptr);
 }
 
 static void	init_game_components(t_game *game)
 {
-	game->config = safe_malloc(sizeof(t_config));
+	game->config = safe_malloc(sizeof(t_config), game);
 	init_config(game->config);
-	game->plyr = safe_malloc(sizeof(t_player));
+	game->plyr = safe_malloc(sizeof(t_player), game);
 	init_player(game->plyr);
-	game->texture = safe_malloc(sizeof(t_tex));
+	game->texture = safe_malloc(sizeof(t_tex), game);
 	init_tex(game->texture);
-	game->ray = safe_malloc(sizeof(t_ray));
+	game->ray = safe_malloc(sizeof(t_ray), game);
 	init_ray(game->ray);
 }
 
