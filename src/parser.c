@@ -6,7 +6,7 @@
 /*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:01:14 by pzaw              #+#    #+#             */
-/*   Updated: 2025/07/10 22:30:13 by jace             ###   ########.fr       */
+/*   Updated: 2025/07/10 22:54:27 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ static char	**allocate_lines_array(size_t line_count, t_game *game)
 	return (lines);
 }
 
-static void	extract_lines(char **lines, char *content, size_t line_count, t_game *game)
+static void	extract_lines(char **lines, char *content, size_t line_count,
+	t_game *game)
 {
 	char	*pos;
 	size_t	i;
