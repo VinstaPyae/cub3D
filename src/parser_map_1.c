@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:54:40 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 19:55:26 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:23:08 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	check_empty_line(char *line, t_game *game)
 {
 	if (line[0] == '\0')
 	{
-		printf("Error\n Empty line found in map\n");
+		printf("Error\nEmpty line found in map\n");
 		ft_clean_exit(game, 1);
 	}
 }

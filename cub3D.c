@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:54:33 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:54:34 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:34:33 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	setup_game(t_game *game)
 {
 	parse_map(game->config->lines, game->config->map_start_indx, game);
 	validate_map(game);
+	check_map_line(game);
 	init_mlx(game);
 	init_textures(game);
 	get_plyr_pos(game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:54:28 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:54:29 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:16:33 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	show_err(char *detail, char *str, int code)
 	ft_putstr_fd("Error\n", 2);
 	if (detail)
 	{
-		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(detail, 2);
 	}
 	if (str)

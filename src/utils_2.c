@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 20:54:21 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 21:02:21 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:34:48 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,17 @@ void	ft_clean_config_tex(t_config *cfg)
 	{
 		free(cfg->texture_we);
 		cfg->texture_we = NULL;
+	}
+}
+
+void	check_map_line(t_game *game)
+{
+	int	i;
+
+	i = game->config->map_start_indx;
+	while (game->config->lines[i])
+	{
+		check_empty_line(game->config->lines[i], game);
+		i++;
 	}
 }

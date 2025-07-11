@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:55:43 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:22:29 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:28:04 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	parse_map(char **lines, int start, t_game *game)
 	game->config->map = allocate_map_array(game, height);
 	while (i < height)
 	{
-		check_empty_line(lines[start], game);
 		game->config->map[i] = allocate_map_line(game, width);
 		copy_and_pad_line(game->config->map[i], lines[start], width);
 		i++;

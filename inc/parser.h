@@ -6,7 +6,7 @@
 /*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:10:46 by pzaw              #+#    #+#             */
-/*   Updated: 2025/07/10 22:31:55 by jace             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:37:29 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		get_map_height(char **lines, int start);
 char	*allocate_map_line(t_game *game, int width);
 void	ft_clean_map_error(t_game *game, char *msg);
 void	check_empty_line(char *line, t_game *game);
+void	check_map_line(t_game *game);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pzaw <pzaw@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jace <jace@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 19:57:26 by pzaw              #+#    #+#             */
-/*   Updated: 2025/06/30 20:00:51 by pzaw             ###   ########.fr       */
+/*   Updated: 2025/07/11 22:36:23 by jace             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void	parse_texture(char *line, char **destination, t_game *game)
 	parts = ft_split(line, ' ');
 	if (!parts)
 		handle_error("Error\nTexture not found\n", parts, game, line);
+	if (parts[2])
+		handle_error("Error\nToo many arguments for texture\n",
+			parts, game, line);
 	*destination = extract_texture_path(parts, game, line);
 	validate_texture_format(*destination, parts, game, line);
 	ft_free_arr((void **)parts);
