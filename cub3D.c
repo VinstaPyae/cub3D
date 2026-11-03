@@ -40,6 +40,12 @@ static void	validate_config(t_game *game)
 		ft_clean_up(game);
 		exit(1);
 	}
+	if (game->config->map_start_indx < 0)
+	{
+		ft_putstr_fd("Error\nMissing map\n", 2);
+		ft_clean_up(game);
+		exit(1);
+	}
 }
 
 static void	setup_game(t_game *game)
